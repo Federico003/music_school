@@ -1,0 +1,67 @@
+﻿.theme-white .navbar {
+  background-color:rgb(255, 255, 255); }
+
+.theme-white .navbar-brand {
+  color: #607D8B; }
+  .theme-white .navbar-brand:hover {
+    color: #607D8B; }
+  .theme-white .navbar-brand:active {
+    color: #607D8B; }
+  .theme-white .navbar-brand:focus {
+    color: #607D8B; }
+
+.theme-white .nav > li > a {
+  color: #607D8B; }
+  .theme-white .nav > li > a:hover {
+    background-color: transparent; }
+  .theme-white .nav > li > a:focus {
+    background-color: transparent; }
+
+.theme-white .nav .open > a {
+  background-color: transparent; }
+  .theme-white .nav .open > a:hover {
+    background-color: transparent; }
+  .theme-white .nav .open > a:focus {
+    background-color: transparent; }
+
+.theme-white .bars {
+  color: #607D8B; }
+
+.theme-white .sidebar .menu .list li.active {
+  background-color: transparent; }
+
+  .theme-white .sidebar .menu .list li.active > :first-child i, .theme-white .sidebar .menu .list li.active > :first-child span {
+    color: #607D8B; }
+
+.theme-white .sidebar .menu .list .toggled {
+  background-color: transparent; }
+
+.theme-white .sidebar .menu .list .ml-menu {
+  background-color: transparent; }
+
+.theme-white .sidebar .legal {
+  background-color: #fff; }
+
+.theme-white .sidebar .legal .copyright a {
+  color: #607D8B !important; }
+
+.sidebar .user-info {
+    background-image: none !important;
+    background-color:#fff;
+  }
+  
+.sidebar .user-info .info-container .name,
+.sidebar .user-info .info-container .email,
+.sidebar .user-info .info-container .user-helper-dropdown
+{
+    color: black;
+}
+
+.label-count {
+  color: #fff;
+}
+
+.sidebar .user-info .info-container .name,
+.sidebar .user-info .info-container .email {
+  color: #000; 
+}
