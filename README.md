@@ -1,4 +1,4 @@
-# Laravel Boilerplate di Alessandro Tieri
+# Laravel Boilerplate
 
 Questo è un boilerplate Laravel preconfigurato con vari pacchetti utili per iniziare rapidamente lo sviluppo di nuove applicazioni.
 
