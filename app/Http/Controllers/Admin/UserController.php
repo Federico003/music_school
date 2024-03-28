@@ -55,9 +55,9 @@ class UserController extends AdminController
 
         return DataTables::of($users)
             ->addColumn('actions', function ($user) {
-                $buttons = '<span class="mr-1"><a href="user/'.$user->id.'/edit" data-id="'.$user->id.'" class="btn waves-effect btn-primary"><i class="material-icons">edit</i></a></span>';
+                $buttons = '<span class="mr-1"><a href="user/'.$user->id.'/edit" data-id="'.$user->id.'" class="btn waves-effect btn-primary" title="Modifica"><i class="material-icons">edit</i></a></span>';
                 if (Auth::user()->id !== $user->id) {
-                    $buttons .= '<span class="mr-1"><button id="'.$user->id.'" class="btn waves-effect btn-danger btn-delete"><i class="material-icons">delete</i></button></span>';
+                    $buttons .= '<span class="mr-1"><button id="'.$user->id.'" class="btn waves-effect btn-danger btn-delete" title="Elimina"><i class="material-icons">delete</i></button></span>';
                 }
 
                 return $buttons;

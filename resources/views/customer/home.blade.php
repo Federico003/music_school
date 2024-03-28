@@ -22,7 +22,7 @@
             data() {
                 return {
                     title: '',
-                    smallTitle: ''
+                    smallTitle: 'Home del customer'
                 }
             },
 
@@ -32,7 +32,7 @@
 
             methods: {
                 startup: function() {
-                    this.title = "";
+                    this.title = "Home";
                 },
             },
         }).mount('#app');

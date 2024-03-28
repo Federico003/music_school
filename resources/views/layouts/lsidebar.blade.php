@@ -23,6 +23,7 @@
     </div>
     <div class="menu">
         <ul class="list">
+            <!-- Admin -->
             @role(['admin'])
                 <li
                     class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['home'], 1) ? 'active' : '' }}">
@@ -39,6 +40,7 @@
                     </a>
                 </li>
                 <hr />
+                <!-- Sistema -->
                 <li>
                     <a href="{{ url('admin/log-viewer') }}" target="_blank">
                         <i class="material-icons">error</i>
@@ -47,6 +49,7 @@
                 </li>
             @endrole
 
+            <!-- Customer --> 
             @role(['customer'])
                 <li
                     class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['home'], 1) ? 'active' : '' }}">
@@ -55,7 +58,6 @@
                         <span>Home</span>
                     </a>
                 </li>
-                <hr />
             @endrole
         </ul>
     </div>
