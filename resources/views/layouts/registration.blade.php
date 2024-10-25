@@ -80,11 +80,9 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
-<body class="theme-white">
+<body class="signup-page theme-white">
 
-    <section class="signup-page">
-        @yield('content')
-    </section>
+    @yield('content')
 
     <!-- Jquery Core Js -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
