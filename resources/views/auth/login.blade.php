@@ -101,13 +101,15 @@
                         </span>
                         <div class="form-line">
                             <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" required
+                                class="form-control @error('password') is-invalid @enderror" style= "width: 90%" name="password" required
                                 autocomplete="current-password" placeholder="Password">
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+                                <i class="material-icons"  id="hide" onclick="ShowHide()" hidden="hidden"  style="float: right">visibility_off</i>
+                                <i class="material-icons"  id="show" onclick="ShowHide()"  style="float: right">visibility</i>
                         </div>
                     </div>
 
@@ -123,13 +125,14 @@
                             </button>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="/register">{{ __('Registrati Ora!') }}</a>
+                        </div>
 
-                    <div class="row m-t-15 m-b--20">
-                        @if (false)
-                            <div class="col-xs-6">
-                                <a href="">{{ __('Register Now!') }}</a>
-                            </div>
-                        @endif
+                        <div>
+                            <a href="{{ route('password.forgot')}}"  style="color: gray">{{ __('Hai dimenticato la password?') }}</a>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -143,6 +146,24 @@
     <script src="{{ asset('plugins/jquery-validation/jquery.validate.js') }}"></script>
 
     <script src="{{ asset('js/admin/admin.js') }}"></script>
+
+    <!-- Js for ShowHide function -->
+    <script type="text/javascript">
+        function ShowHide (){
+            var x = document.getElementById("password");
+            if (x.type === "password"){
+                x.type = "text";
+                document.getElementById('hide').style.display = "inline-block";
+                document.getElementById('show').style.display = "none";
+            }
+            else{
+                x.type = "password";
+                document.getElementById('hide').style.display = "none";
+                document.getElementById('show').style.display = "inline-block";
+            }
+        }
+    </script>
+
 </body>
 
 </html>

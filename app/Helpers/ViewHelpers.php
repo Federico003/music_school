@@ -25,6 +25,9 @@ function homeRoute()
     if ($role === 'Cliente') {
         return route('customer.home');
     }
+    /*if ($role == null) {
+        return route('auth.login');
+    }*/
 
     return route('admin.home');
 }

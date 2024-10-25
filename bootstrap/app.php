@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'status' => StatusMiddleware::class,
         ]);
+        //$middleware->redirectGuestsTo('login');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

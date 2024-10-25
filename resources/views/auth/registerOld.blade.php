@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.registration')
 
-@section('content')
+@section('signup-page')
     <div class="container-fluid">
 
         <div class="row clearfix">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="header">
-                        <h2><i class="material-icons">edit</i>Modifica utente</h2>
+                        <h2><i class="material-icons">edit</i>Crea nuovo utente</h2>
                     </div>
                     <div class="body">
 
@@ -17,28 +17,27 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('admin.user.update', $user) }}" method="POST">
+                        <form id="signup-page" action="/register" method="POST">
                             {{ csrf_field() }}
-                            {{ method_field('PATCH') }}
-
-                            <input type="hidden" name="id" value="{{ $user->id }}">
 
                             <div class="row clearfix">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="row clearfix">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <x-admin.input-text :name="'name'" :label="'Nome'" :value="old('name') ?? $user->name"
+                                            <x-admin.input-text :name="'name'" :label="'Nome'"
                                                 :description="'Nome dell\' utente'" :required="true" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+
+
                             <div class="row clearfix">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="row clearfix">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <x-admin.input-text :name="'email'" :label="'Email'" :value="old('email') ?? $user->email"
+                                            <x-admin.input-text :name="'email'" :label="'Email'"
                                                 :description="'Email dell\' utente'" :required="true" />
                                         </div>
                                     </div>
@@ -49,7 +48,7 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="row clearfix">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <label for="email">Nuova password<span class="required">*</span></label>
+                                            <label for="password">Password<span class="required">*</span></label>
                                             <div class="form-group">
                                                 <div class="form-line {{ $errors->has('password') ? 'error' : '' }}">
                                                     <input type="password" class="form-control" name="password"
@@ -58,7 +57,7 @@
                                                 @if ($errors->has('password'))
                                                     <label class="error">{{ $errors->first('password') }}</label>
                                                 @endif
-                                                <div class="help-info">Nuova password utente</div>
+                                                <div class="help-info">Password utente</div>
                                             </div>
                                         </div>
                                     </div>
@@ -69,24 +68,16 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="row clearfix">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="form-line">
-                                                <x-admin.select :name="'role'" :options="$roles" :label="'Ruolo'"
-                                                    :description="'Ruolo dell utente'" :check="old('role') ?? $user->roles->first()->name" :required="true"
-                                                    :disabled="true" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row clearfix">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="row clearfix">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="form-line">
-                                                <x-admin.select :name="'status'" :options="$status" :label="'Stato'"
-                                                    :description="'Stato dell utente'" :check="old('status') ?? $user->status" :required="true"
-                                                    :disabled="$user->id == Auth::user()->id ? true : false" />
+                                            <label for="password_confirmation">Conferma Password<span class="required">*</span></label>
+                                            <div class="form-group">
+                                                <div class="form-line {{ $errors->has('password') ? 'error' : '' }}">
+                                                    <input type="password" class="form-control" name="password_confirmation"
+                                                        value="" maxlength="255">
+                                                </div>
+                                                @if ($errors->has('password'))
+                                                    <label class="error">{{ $errors->first('password') }}</label>
+                                                @endif
+                                                <div class="help-info">Conferma Password</div>
                                             </div>
                                         </div>
                                     </div>
@@ -96,22 +87,13 @@
                             <div class="row clearfix">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group">
-
                                         <button type="submit" class="btn btn-primary waves-effect">
                                             <i class="material-icons">done</i>
-                                            <span>Salva</span>
+                                            <span>Registrati</span>
                                         </button>
 
-                                        <a href="{{ route('admin.user.index') }}" class="btn waves-effect btn-default ml-2">
+                                        <a href="/login" class="btn waves-effect btn-default ml-2">
                                             <i class="material-icons">undo</i><span>Indietro</span></a>
-
-                                        @if ($user->id != Auth::user()->id)
-                                            <x-admin.ajax-del-button-link :url="'admin/user'" :resource="$user" />
-                                        @endif
-
-                                        <!--$buttons .= '<span class="mr-1"><a href="users/'.$user->id.'/print" data-id="'.$user->id.'" class="btn waves-effect btn-default" title="Stampa"><i class="material-icons">print</i></a></span>';-->
-                                        <a href="{{ route('users.print', $user->id) }}" data-id="{{ $user->id }}" class="btn waves-effect btn-default ml-2" title="Stampa">
-                                            <i class="material-icons">print</i><span class="mr-1">Stampa</span></a>
                                     </div>
                                 </div>
                             </div>

@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
+use PDF;
+use Log;
 
 class UserController extends AdminController
 {
@@ -56,6 +58,7 @@ class UserController extends AdminController
         return DataTables::of($users)
             ->addColumn('actions', function ($user) {
                 $buttons = '<span class="mr-1"><a href="user/'.$user->id.'/edit" data-id="'.$user->id.'" class="btn waves-effect btn-primary" title="Modifica"><i class="material-icons">edit</i></a></span>';
+                $buttons .= '<span class="mr-1"><a href="users/'.$user->id.'/print" data-id="'.$user->id.'" class="btn waves-effect btn-default" title="Stampa"><i class="material-icons">print</i></a></span>';
                 if (Auth::user()->id !== $user->id) {
                     $buttons .= '<span class="mr-1"><button id="'.$user->id.'" class="btn waves-effect btn-danger btn-delete" title="Elimina"><i class="material-icons">delete</i></button></span>';
                 }
@@ -97,11 +100,23 @@ class UserController extends AdminController
 
         $validatedData = $request->validated();
 
+        //dd($validatedData);
+
         $user = $this->userService->storeUser($validatedData);
 
         $this->userService->assignRoleToUser($user, $validatedData['role']);
 
-        return Redirect::route('admin.user.index');
+        return Redirect::route(route: 'admin.user.index');
+    }
+
+    /**
+     * Export users to an Excel file.
+     *
+     * @return mixed The Excel download response for exporting users to a file.
+     */
+    public function exportToExcel()
+    {
+        return Excel::download(new UsersExport(), time().'-Utenti.xlsx');
     }
 
     /**
@@ -152,12 +167,30 @@ class UserController extends AdminController
     }
 
     /**
-     * Export users to an Excel file.
+     * Stampa una scheda informativa sull'utente.
      *
-     * @return mixed The Excel download response for exporting users to a file.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function exportToExcel()
+    public function print(User $user)
     {
-        return Excel::download(new UsersExport(), time().'-Utenti.xlsx');
+
+        /*dd( $user->name,
+            $user->email,
+            $user->created_at->format('d/m/Y'),
+            $user->getRoleName(),
+        );*/
+
+        try {
+            if (! $user) {
+                return redirect()->route('admin.user.index')->withErrors("L'utente non esiste.");
+            }
+
+            $pdf = PDF::loadView('admin.user.pdf.show', compact('user'));
+
+            return $pdf->download('User.pdf');
+        } catch (Exception $e) {
+            Log::info($e->getMessage());
+        }
     }
 }

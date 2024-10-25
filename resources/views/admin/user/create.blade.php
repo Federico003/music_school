@@ -68,7 +68,7 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
                                                 <x-admin.select :name="'role'" :options="$roles" :label="'Ruolo'"
-                                                    :check="old('role') ?? ''" :description="'Ruolo dell utente'" :empty="true"
+                                                    :check="old('role') ?? ''" :description="'Ruolo dell\' utente'" :empty="true"
                                                     :required="true" />
                                             </div>
                                         </div>
