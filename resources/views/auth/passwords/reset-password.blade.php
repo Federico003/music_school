@@ -8,10 +8,10 @@
         </div>
         <div class="card">
             <div class="body">
-                <form id="reset_password" method="POST" action="{{ route('password.update') }}">
+                <form id="reset_password" method="POST" action="{{ route('password.update',['token'=>$token]) }}">
                     @csrf
 
-                    <input type="hidden" name="token" value="{{ $token }}">
+                    <div><input type="hidden" name="token" value="{{ $token }}"></div>
 
                     @if (Session::has('message'))
                         <div class="alert alert-success" role="alert">
@@ -23,14 +23,7 @@
                         Inserire una nuova Password
                     </div>
 
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="material-icons">email</i>
-                        </span>
-                        <div class="form-line">
-                            <x-input :name="'email'" :required="true" :placeholder="'Indirizzo Email'" :value="old('email')"/>
-                        </div>
-                    </div>
+
 
 					<div class="input-group">
                         <span class="input-group-addon">
@@ -42,7 +35,7 @@
                             <i class="material-icons"  id="show" onclick="ShowHide()"  style="float: right">visibility</i>
 
                             @if ($errors->has('password'))
-                                <span class="text-danger">{{ $errors->first('password') }}</span>
+                                <span class="text-danger">{{ $errors->first('password_new') }}</span>
                             @endif
                         </div>
                     </div>

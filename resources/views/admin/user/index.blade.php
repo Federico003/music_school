@@ -23,6 +23,13 @@
                                             value="Esporta file Excel"><i class="material-icons">file_download</i> Esporta
                                             su Excel</a>
                                     </li>
+                                    <li><a><label class=" waves-effect waves-block"
+                                        for="formFile"><i class="material-icons">file_upload</i>Importa file Excel</label>
+                                        <input style="display: none" class="form-control" type="file" id="formFile"></a>
+                                        <button class="btn waves-effect btn-block btn-primary waves-effect" type="submit">
+                                            {{ __('Importa') }}
+                                        </button>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
