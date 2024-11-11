@@ -10,6 +10,5 @@ return [
 
     'user' => 'utente',
     'home' => 'home',
-    'customer' => 'cliente',
 
 ];

@@ -52,7 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected static $roles = [
         'admin' => 'Amministratore',
-        'customer' => 'Cliente',
+        'user' => 'Utente',
     ];
 
     /**

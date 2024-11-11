@@ -7,6 +7,7 @@ use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use App\Services\UserService;
+use App\Imports\UserImport;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
+use Illuminate\Http\Request;
 use PDF;
 use Log;
 
@@ -120,6 +122,34 @@ class UserController extends AdminController
     }
 
     /**
+     * Show the form for Inport users from an Excel file.
+     *
+     * @return View The view displaying the user creation form.
+     */
+    public function showImport()
+    {
+        //$user = User::all();
+        return view('admin.user.import', /*compact('user')*/);
+    }
+
+    public function import(Request $request)
+    {
+
+        //$import = new UserImport();
+
+        // Importa i dati come array
+        Excel::import(new UserImport(), $request->file ('excel_file'));
+
+        //Log::info('3');
+
+        //Log::info('4');
+        //Log::info($sheetData);
+
+
+        return view('admin.user.import') ; // Passa i dati alla vista
+    }
+
+    /**
      * Show the form for editing the specified user.
      *
      * @param  User  $user  The user to edit.
@@ -151,6 +181,8 @@ class UserController extends AdminController
         $validatedData = $request->validated();
 
         $this->userService->updateUser($user, $validatedData);
+
+        $this->userService->assignRoleToUser($user, $validatedData['role']);
 
         return Redirect::route('admin.user.index');
     }

@@ -100,8 +100,8 @@ class LoginController extends Controller
         switch ($role) {
             case 'admin':
                 return '/admin/home';
-            case 'customer':
-                return '/customer/home';
+            case 'user':
+                return '/user/home';
             default:
                 return '/home';
         }

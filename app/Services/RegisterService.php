@@ -35,7 +35,7 @@ class RegisterService
     {
         //dd($roleName);
         //$role = Role::where('name', $roleName)->first();
-        $role = 'customer';
+        $role = 'user';
 
         //if ($role) {
             $user->assignRole($role);

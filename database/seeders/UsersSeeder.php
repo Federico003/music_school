@@ -21,12 +21,12 @@ class UsersSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Customer',
-            'email' => 'customer@example.com',
+            'name' => 'User',
+            'email' => 'user@example.com',
             'password' => bcrypt('password'),
         ]);
 
         User::whereEncrypted('email', 'admin@example.com')->first()->assignRole('admin');
-        User::whereEncrypted('email', 'customer@example.com')->first()->assignRole('customer');
+        User::whereEncrypted('email', 'user@example.com')->first()->assignRole('user');
     }
 }
