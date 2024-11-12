@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use ESolution\DBEncryption\Traits\EncryptedAttribute;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use EncryptedAttribute, HasFactory, HasRoles;
 
@@ -51,7 +52,7 @@ class User extends Authenticatable
      */
     protected static $roles = [
         'admin' => 'Amministratore',
-        'customer' => 'Cliente',
+        'user' => 'Utente',
     ];
 
     /**

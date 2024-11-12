@@ -5,14 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\UsersExport;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Imports\UserImport;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Log;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 use Yajra\DataTables\DataTables;
 
 class UserController extends AdminController
@@ -56,6 +60,7 @@ class UserController extends AdminController
         return DataTables::of($users)
             ->addColumn('actions', function ($user) {
                 $buttons = '<span class="mr-1"><a href="user/'.$user->id.'/edit" data-id="'.$user->id.'" class="btn waves-effect btn-primary" title="Modifica"><i class="material-icons">edit</i></a></span>';
+                $buttons .= '<span class="mr-1"><a href="users/'.$user->id.'/print" data-id="'.$user->id.'" class="btn waves-effect btn-default" title="Stampa"><i class="material-icons">print</i></a></span>';
                 if (Auth::user()->id !== $user->id) {
                     $buttons .= '<span class="mr-1"><button id="'.$user->id.'" class="btn waves-effect btn-danger btn-delete" title="Elimina"><i class="material-icons">delete</i></button></span>';
                 }
@@ -96,12 +101,37 @@ class UserController extends AdminController
         }
 
         $validatedData = $request->validated();
-
         $user = $this->userService->storeUser($validatedData);
-
         $this->userService->assignRoleToUser($user, $validatedData['role']);
 
-        return Redirect::route('admin.user.index');
+        return Redirect::route(route: 'admin.user.index');
+    }
+
+    /**
+     * Export users to an Excel file.
+     *
+     * @return mixed The Excel download response for exporting users to a file.
+     */
+    public function exportToExcel()
+    {
+        return Excel::download(new UsersExport, time().'-Utenti.xlsx');
+    }
+
+    /**
+     * Show the form for Inport users from an Excel file.
+     *
+     * @return View The view displaying the user creation form.
+     */
+    public function showImport()
+    {
+        return view('admin.user.import');
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new UserImport, $request->file('file'));
+
+        return view('admin.user.import'); // Passa i dati alla vista
     }
 
     /**
@@ -134,8 +164,8 @@ class UserController extends AdminController
         }
 
         $validatedData = $request->validated();
-
         $this->userService->updateUser($user, $validatedData);
+        $this->userService->assignRoleToUser($user, $validatedData['role']);
 
         return Redirect::route('admin.user.index');
     }
@@ -152,12 +182,23 @@ class UserController extends AdminController
     }
 
     /**
-     * Export users to an Excel file.
+     * Stampa una scheda informativa sull'utente.
      *
-     * @return mixed The Excel download response for exporting users to a file.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function exportToExcel()
+    public function print(User $user)
     {
-        return Excel::download(new UsersExport(), time().'-Utenti.xlsx');
+        try {
+            if (! $user) {
+                return redirect()->route('admin.user.index')->withErrors("L'utente non esiste.");
+            }
+
+            $pdf = PDF::loadView('admin.user.pdf.show', compact('user'));
+
+            return $pdf->download('User.pdf');
+        } catch (Exception $e) {
+            Log::info($e->getMessage());
+        }
     }
 }

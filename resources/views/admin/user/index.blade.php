@@ -16,12 +16,17 @@
                                 <ul class="dropdown-menu pull-right">
                                     <li><a href="{{ route('admin.user.create') }}" role="button" onclick=""
                                             name="crea_nuovo" id="nuovo_utente" class=" waves-effect waves-block"
-                                            value="Nuovo utente"><i class="material-icons">add</i> Nuovo utente</a>
+                                            value="Nuovo utente" style="font-weight: bold"><i class="material-icons">add</i> Nuovo utente</a>
                                     </li>
                                     <li><a href="{{ route('admin.user.exportToExcel') }}" role="button" onclick=""
                                             name="esporta" id="esporta" class=" waves-effect waves-block"
-                                            value="Esporta file Excel"><i class="material-icons">file_download</i> Esporta
+                                            value="Esporta file Excel" style="font-weight: bold"><i class="material-icons">file_download</i> Esporta
                                             su Excel</a>
+                                    </li>
+                                    <li><a href="{{ route('admin.user.showImport') }}" role="button" onclick=""
+                                        name="esporta" id="esporta" class=" waves-effect waves-block"
+                                        value="Importa file Excel" style="font-weight: bold"><i class="material-icons">file_upload</i> Importa
+                                        da Excel</a>
                                     </li>
                                 </ul>
                             </li>

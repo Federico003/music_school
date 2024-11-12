@@ -22,7 +22,7 @@
             data() {
                 return {
                     title: '',
-                    smallTitle: 'Home del customer'
+                    smallTitle: 'Home dell\'Utente'
                 }
             },
 

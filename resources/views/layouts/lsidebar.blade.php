@@ -50,10 +50,10 @@
             @endrole
 
             <!-- Customer --> 
-            @role(['customer'])
+            @role(['user'])
                 <li
                     class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['home'], 1) ? 'active' : '' }}">
-                    <a href="{{ route('customer.home') }}">
+                    <a href="{{ route('user.home') }}">
                         <i class="material-icons">home</i>
                         <span>Home</span>
                     </a>

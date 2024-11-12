@@ -10,7 +10,6 @@ return [
 
     'user' => 'utente',
     'home' => 'home',
-    'customer' => 'cliente',
     'installation' => 'impianti',
     'supplier' => 'fornitore',
     'order' => 'ordine',

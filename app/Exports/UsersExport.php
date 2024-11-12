@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class UsersExport implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithHeadings, WithMapping
+class UsersExport implements FromCollection, ShouldAutoSize, /*WithColumnFormatting,*/ WithHeadings, WithMapping
 {
     /**
      * Get the data collection to export.
@@ -35,6 +35,7 @@ class UsersExport implements FromCollection, ShouldAutoSize, WithColumnFormattin
             'Nome',
             'Email',
             'Ruolo',
+            'Password',
             'Data inserimento',
             'Data ultima modifica',
         ];
@@ -53,6 +54,7 @@ class UsersExport implements FromCollection, ShouldAutoSize, WithColumnFormattin
             $user->name,
             $user->email,
             $user->getRoleName(),
+            $user->null,
             $user->created_at->format('d/m/Y'),
             $user->updated_at->format('d/m/Y'),
         ];
@@ -66,8 +68,8 @@ class UsersExport implements FromCollection, ShouldAutoSize, WithColumnFormattin
     public function columnFormats(): array
     {
         return [
-            'E' => NumberFormat::FORMAT_DATE_DDMMYYYY,
             'F' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'G' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 }

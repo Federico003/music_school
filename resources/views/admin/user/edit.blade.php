@@ -72,7 +72,7 @@
                                             <div class="form-line">
                                                 <x-admin.select :name="'role'" :options="$roles" :label="'Ruolo'"
                                                     :description="'Ruolo dell utente'" :check="old('role') ?? $user->roles->first()->name" :required="true"
-                                                    :disabled="true" />
+                                                    :disabled="$user->id == Auth::user()->id ? true : false" />
                                             </div>
                                         </div>
                                     </div>
@@ -109,6 +109,9 @@
                                             <x-admin.ajax-del-button-link :url="'admin/user'" :resource="$user" />
                                         @endif
 
+                                        <!--$buttons .= '<span class="mr-1"><a href="users/'.$user->id.'/print" data-id="'.$user->id.'" class="btn waves-effect btn-default" title="Stampa"><i class="material-icons">print</i></a></span>';-->
+                                        <a href="{{ route('users.print', $user->id) }}" data-id="{{ $user->id }}" class="btn waves-effect btn-default ml-2" title="Stampa">
+                                            <i class="material-icons">print</i><span class="mr-1">Stampa</span></a>
                                     </div>
                                 </div>
                             </div>

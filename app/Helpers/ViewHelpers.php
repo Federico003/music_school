@@ -22,9 +22,12 @@ function homeRoute()
     if ($role === 'Amministratore') {
         return route('admin.home');
     }
-    if ($role === 'Cliente') {
-        return route('customer.home');
+    if ($role === 'Utente') {
+        return route('user.home');
     }
+    /*if ($role == null) {
+        return route('auth.login');
+    }*/
 
     return route('admin.home');
 }
