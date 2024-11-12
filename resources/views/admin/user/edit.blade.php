@@ -72,7 +72,7 @@
                                             <div class="form-line">
                                                 <x-admin.select :name="'role'" :options="$roles" :label="'Ruolo'"
                                                     :description="'Ruolo dell utente'" :check="old('role') ?? $user->roles->first()->name" :required="true"
-                                                    :disabled="true" />
+                                                    :disabled="$user->id == Auth::user()->id ? true : false" />
                                             </div>
                                         </div>
                                     </div>
