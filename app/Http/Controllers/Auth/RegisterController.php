@@ -33,7 +33,7 @@ class RegisterController extends Controller
      *
      * @return View The view displaying the user creation form.
      */
-    public function create(): View
+    public function showRegistrationForm()
     {
         //$roles = User::getRoles();
 
@@ -47,7 +47,7 @@ class RegisterController extends Controller
      * @param  UserRegisterRequest  $request  The validated user store request.
      * @return RedirectResponse A redirect response based on the user's role.
      */
-    public function store(UserRegisterRequest $request)
+    public function register (UserRegisterRequest $request)
     {
         //validate
         $validator = $request->validator;
@@ -62,7 +62,7 @@ class RegisterController extends Controller
 
         $user = $this->userService->storeUser($validatedData);
 
-        $this->userService->assignRoleToUser($user/*, $validatedData['role']*/);
+        $this->userService->assignRoleToUser($user);
 
         return Redirect::route(route: 'login');
     }
