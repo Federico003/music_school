@@ -74,6 +74,12 @@
                 <form id="sign_in" method="POST" action="{{ route('login') }}">
                     @csrf
 
+                    @if (Session::has('message'))
+                        <div class="alert alert-success" role="alert">
+                            {{ Session::get('message') }}
+                        </div>
+                    @endif
+
                     <div class="msg">
                         <span>Inserisci le tue credenziali</span>
                     </div>
@@ -126,13 +132,18 @@
                         </div>
                     </div>
                     <div class="row">
+                        @if (Route::has('register'))
                         <div class="col-xs-6">
-                            <a href="/register">{{ __('Registrati Ora!') }}</a>
+                            <a href="{{ route('register')}}">{{ __('Registrati Ora!') }}</a>
                         </div>
+                        @endif
 
+                        @if (Route::has('password.request'))
                         <div>
-                            <a href="{{ route('password.forgot')}}"  style="color: gray">{{ __('Hai dimenticato la password?') }}</a>
+                            <a href="{{ route('password.request')}}"  style="color: gray">{{ __('Hai dimenticato la password?') }}</a>
                         </div>
+                        @endif
+
                     </div>
                 </form>
             </div>
