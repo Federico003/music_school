@@ -53,7 +53,7 @@ class UserRegisterRequest extends FormRequest
                     }
                 },
                 'max:255'],
-            'password' => ['required', 'string', 'min:6', 'confirmed']
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
         ];
     }
 

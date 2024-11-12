@@ -3,32 +3,21 @@
 namespace App\Imports;
 
 use App\Models\User;
-use App\Models\Role;
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Hash;
 use ESolution\DBEncryption\Encrypter;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 use Log;
-use DB;
+use Maatwebsite\Excel\Concerns\ToCollection;
 
 class UserImport implements ToCollection
 {
-
     //protected $rows = [];
 
-    /**
-    * @param Collection $collection
-    */
     public function collection(Collection $collection)
     {
-
-        //Log::info('2');
-        //Log::info('Data imported:', $collection->toArray());
-
         foreach ($collection as $key => $row) {
 
-            //salta la riga di intestazione
+            // Salta la riga di intestazione
             if ($key == 0) {
                 continue;
             }
@@ -38,22 +27,19 @@ class UserImport implements ToCollection
             $existingUser = User::where('email', Encrypter::encrypt($email))->first();
 
             if ($existingUser) {
-                //Log::info("L'utente con email {$email} esiste già");
+                continue;
+            
             } else {
-                //Log::info("L'utente con email {$email} non esiste e verrà creato.");
-
                 $newUser = User::create([
                     'name' => trim($row[1]),
                     'email' => $email,
-                    'password' => (trim (Hash::make($row[4]))),
+                    'password' => (trim(Hash::make($row[4]))),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
-
-                //Log::info($this->rows);
             }
 
-            if (isset($newUser)){
+            if (isset($newUser)) {
                 $this->assignRoleToUser($newUser);
             }
         }
@@ -61,18 +47,7 @@ class UserImport implements ToCollection
 
     public function assignRoleToUser(User $user)
     {
-        $role = 'user';
-
-        if ($role) {
-            $user->assignRole($role);
-
-            //Log::info("Ruolo '{$role}' assegnato a {$user->email}");
-        }
+        $role = 'user'; // Fissato ad User
+        $user->assignRole($role);
     }
-
-    /*public function getRows(): array
-    {
-        return $this->rows;
-    }*/
 }
-

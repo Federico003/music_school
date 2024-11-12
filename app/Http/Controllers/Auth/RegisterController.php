@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\View\View;
-use App\Services\RegisterService;
-use App\Models\User;
 use App\Http\Requests\UserRegisterRequest;
+use App\Models\User;
+use App\Services\RegisterService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class RegisterController extends Controller
 {
-        /**
+    /**
      * The RegisterService instance for managing user-related operations.
      */
     protected RegisterService $userService;
@@ -35,10 +34,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        //$roles = User::getRoles();
-
-        return view('auth.register', /*compact('roles')*/);
-
+        return view('auth.register');
     }
 
     /**
@@ -47,9 +43,8 @@ class RegisterController extends Controller
      * @param  UserRegisterRequest  $request  The validated user store request.
      * @return RedirectResponse A redirect response based on the user's role.
      */
-    public function register (UserRegisterRequest $request)
+    public function register(UserRegisterRequest $request)
     {
-        //validate
         $validator = $request->validator;
 
         if (isset($validator) && $validator->fails()) {
@@ -57,11 +52,7 @@ class RegisterController extends Controller
         }
 
         $validatedData = $request->validated();
-
-        //dd($validatedData);
-
         $user = $this->userService->storeUser($validatedData);
-
         $this->userService->assignRoleToUser($user);
 
         return Redirect::route(route: 'login');

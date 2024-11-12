@@ -11,3 +11,7 @@
     sudo php artisan co:cl
     sudo php artisan vi:cl
 @endtask
+
+@task('pint', ['on' => ['localhost']])
+./vendor/bin/pint
+@endtask

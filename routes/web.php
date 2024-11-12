@@ -1,14 +1,16 @@
 <?php
 
-use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/login');
 });
 
-Auth::routes(['register'=>true,'confirm' => false, 'reset'=>true, 'verify' => false]);
-
+/**
+ * Per disabilitare la registrazione: 
+ * 'register' => false
+ */
+Auth::routes(['register' => true, 'confirm' => false, 'reset' => true, 'verify' => false]);
 
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
@@ -37,4 +39,3 @@ Route::get('/users/{user}/print', [App\Http\Controllers\Admin\UserController::cl
 Route::middleware(['auth', 'role:user', 'status'])->prefix('user')->name('user.')->group(function () {
     Route::get('/home', [App\Http\Controllers\Users\HomeController::class, 'index'])->name('home');
 });
-

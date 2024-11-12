@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Response;
 use Spatie\Permission\Models\Role;
 
 class RegisterService
@@ -17,7 +15,6 @@ class RegisterService
      */
     public function storeUser(array $userData): User
     {
-        //dd($userData);
         return User::create([
             'name' => $userData['name'],
             'email' => $userData['email'],
@@ -33,12 +30,7 @@ class RegisterService
      */
     public function assignRoleToUser(User $user/*, string $roleName*/): void
     {
-        //dd($roleName);
-        //$role = Role::where('name', $roleName)->first();
-        $role = 'user';
-
-        //if ($role) {
-            $user->assignRole($role);
-        //}
+        $role = 'user'; // Fissato a User
+        $user->assignRole($role);
     }
 }

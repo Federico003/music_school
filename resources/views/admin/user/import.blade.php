@@ -1,12 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-@php
-    use App\Models\User;
-    $users = User::all();
-@endphp
-
     <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -102,21 +96,7 @@
                                                         <th>Ultima Modifica</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <!--@foreach ($users as $user)
-                                                        <tr>
-                                                            @php
-                                                                //Log::info('Utente:', $user->toArray());
-                                                            @endphp
-                                                            <td>{{ $user->id }}</td>
-                                                            <td>{{ $user->name }}</td>
-                                                            <td>{{ $user->email }}</td>
-                                                            <td>{{ $user->getRoleName()}}</td>
-                                                            <td>{{ $user->created_at }}</td>
-                                                            <td>{{ $user->updated_at }}</td>
-                                                        </tr>
-                                                    @endforeach-->
-                                                </tbody>
+                                                <tbody></tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -198,7 +178,6 @@
         sending: function(file, response) {
             console.log('sending');
             $('.page-loader-wrapper').css('opacity', '0.7').show();
-
         },
 
         /**
@@ -225,7 +204,6 @@
          */
         error: function(file, response) {
             console.log(response);
-            //table.ajax.reload();
             $('.page-loader-wrapper').hide();
 
             let firstKey = Object.keys(response.errors)[0];

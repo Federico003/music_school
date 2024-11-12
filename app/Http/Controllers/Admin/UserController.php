@@ -5,19 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\UsersExport;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Imports\UserImport;
 use App\Models\User;
 use App\Services\UserService;
-use App\Imports\UserImport;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-use Maatwebsite\Excel\Facades\Excel;
-use Yajra\DataTables\DataTables;
-use Illuminate\Http\Request;
-use PDF;
 use Log;
+use Maatwebsite\Excel\Facades\Excel;
+use PDF;
+use Yajra\DataTables\DataTables;
 
 class UserController extends AdminController
 {
@@ -101,11 +101,7 @@ class UserController extends AdminController
         }
 
         $validatedData = $request->validated();
-
-        //dd($validatedData);
-
         $user = $this->userService->storeUser($validatedData);
-
         $this->userService->assignRoleToUser($user, $validatedData['role']);
 
         return Redirect::route(route: 'admin.user.index');
@@ -118,7 +114,7 @@ class UserController extends AdminController
      */
     public function exportToExcel()
     {
-        return Excel::download(new UsersExport(), time().'-Utenti.xlsx');
+        return Excel::download(new UsersExport, time().'-Utenti.xlsx');
     }
 
     /**
@@ -128,25 +124,14 @@ class UserController extends AdminController
      */
     public function showImport()
     {
-        //$user = User::all();
-        return view('admin.user.import', /*compact('user')*/);
+        return view('admin.user.import');
     }
 
     public function import(Request $request)
     {
+        Excel::import(new UserImport, $request->file('file'));
 
-        //$import = new UserImport();
-
-        // Importa i dati come array
-        Excel::import(new UserImport(), $request->file ('excel_file'));
-
-        //Log::info('3');
-
-        //Log::info('4');
-        //Log::info($sheetData);
-
-
-        return view('admin.user.import') ; // Passa i dati alla vista
+        return view('admin.user.import'); // Passa i dati alla vista
     }
 
     /**
@@ -179,9 +164,7 @@ class UserController extends AdminController
         }
 
         $validatedData = $request->validated();
-
         $this->userService->updateUser($user, $validatedData);
-
         $this->userService->assignRoleToUser($user, $validatedData['role']);
 
         return Redirect::route('admin.user.index');
@@ -206,13 +189,6 @@ class UserController extends AdminController
      */
     public function print(User $user)
     {
-
-        /*dd( $user->name,
-            $user->email,
-            $user->created_at->format('d/m/Y'),
-            $user->getRoleName(),
-        );*/
-
         try {
             if (! $user) {
                 return redirect()->route('admin.user.index')->withErrors("L'utente non esiste.");
