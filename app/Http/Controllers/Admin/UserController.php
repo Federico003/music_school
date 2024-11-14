@@ -155,10 +155,10 @@ class UserController extends AdminController
         if (isset($validator) && $validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+
         $validatedData = $request->validated();
 
-        // Un utente non può modificare il suo ruolo o lo stato 
+        // Un utente non può modificare il suo ruolo o lo stato
         if ($user->id == Auth::user()->id) {
             $validatedData['role'] = Auth::user()->getRoleName();
             $validatedData['status'] = Auth::user()->status;

@@ -7,7 +7,7 @@ Route::get('/', function () {
 });
 
 /**
- * Per disabilitare la registrazione: 
+ * Per disabilitare la registrazione:
  * 'register' => false
  */
 Auth::routes(['register' => true, 'confirm' => false, 'reset' => true, 'verify' => false]);

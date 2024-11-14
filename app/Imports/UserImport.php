@@ -10,10 +10,9 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 
 class UserImport implements ToCollection
 {
-
     /**
-     * @param Collection $collection
-     * 
+     * @param  Collection  $collection
+     *
      * Importa un file excel contenente utenti da aggiungere al database.
      * La prima riga del file  contiene l'intestazione e viene ignorata.
      * Le colonne del file devono contenere i seguenti dati:
@@ -21,28 +20,29 @@ class UserImport implements ToCollection
      * - Colonna 2: Nome utente
      * - Colonna 3: Email utente
      * - Colonna 4: Password utente
-     * 
+     *
      * Se un utente con la stessa email esiste gi  nel database, lo salto.
      * Se un utente non esiste, lo creo e gli assegno il ruolo "user".
-     * 
      * @return void
      */
     public function collection(Collection $collection)
     {
         foreach ($collection as $key => $row) {
             // Salta la riga di intestazione
-            if ($key == 0) { continue; }
+            if ($key == 0) {
+                continue;
+            }
 
             // Pulisco i dati in ingresso
             $name = $this->cleanUpOrNullValue($row[1]) ?? 'User';
-            $email = $this->cleanUpOrNullValue($row[2]) ?? strtolower($name) .'@example.com';
+            $email = $this->cleanUpOrNullValue($row[2]) ?? strtolower($name).'@example.com';
             $password = $this->cleanUpOrNullValue($row[3]) ?? 'password';
 
-            // Se esiste un utente con lo stesso email, lo salto 
+            // Se esiste un utente con lo stesso email, lo salto
             $existingUser = User::where('email', Encrypter::encrypt($email))->first();
             if ($existingUser) {
                 continue;
-            
+
             } else {
                 $user = User::create([
                     'name' => $name,
@@ -60,13 +60,14 @@ class UserImport implements ToCollection
     }
 
     /**
-     * Cleans up the input value by trimming whitespace. 
+     * Cleans up the input value by trimming whitespace.
      * Returns null if the resulting string is empty.
      *
-     * @param mixed $value The value to be cleaned up.
+     * @param  mixed  $value  The value to be cleaned up.
      * @return string|null The trimmed value or null if empty.
      */
-    private function cleanUpOrNullValue($value) {
+    private function cleanUpOrNullValue($value)
+    {
         if (strlen(trim($value)) == 0) {
             return null;
         }
