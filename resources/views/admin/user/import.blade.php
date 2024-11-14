@@ -13,26 +13,8 @@
                                     <i class="material-icons">vertical_align_center</i>
                                 </a>
                             </li>
-                            <li class="dropdown">
-                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="{{ route('admin.user.create') }}" role="button" onclick=""
-                                            name="crea_nuovo" id="nuovo_utente" class=" waves-effect waves-block"
-                                            value="Nuovo utente" style="font-weight: bold"><i class="material-icons">add</i> Nuovo utente</a>
-                                    </li>
-                                    <li><a href="{{ route('admin.user.exportToExcel') }}" role="button" onclick=""
-                                            name="esporta" id="esporta" class=" waves-effect waves-block"
-                                            value="Esporta file Excel" style="font-weight: bold"><i class="material-icons">file_download</i> Esporta
-                                            su Excel</a>
-                                    </li>
-                                </ul>
-                            </li>
                         </ul>
                     </div>
-
 
                     <div id="dropzone" class="body body-collapsable open">
                         <form action="{{ route('admin.user.import') }}" id="fileInsert" class="dropzone" method="post" enctype="multipart/form-data">
@@ -53,61 +35,53 @@
             </div>
         </div>
 
-
-
-
-                        <div class="row clearfix">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="card card-collapsable">
-                                    <div class="header">
-                                        <h2><i class="material-icons">people</i>Elenco degli utenti</h2>
-                                        <ul class="header-dropdown m-r--5">
-                                            <li>
-                                                <a href="javascript:void(0);" class="collapsable-handler">
-                                                    <i class="material-icons">vertical_align_center</i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="body body-collapsable open">
-                                        @if ($errors->any())
-                                            <div id="errors-container" class="alert alert-danger alert-dismissible">
-                                                <span>Si è verificato un errore: {{ $errors->first() }}</span>
-                                            </div>
-                                        @endif
-
-                                        @if (Session::has('success'))
-                                            <div id="msg-container" class="alert alert-success alert-dismissible">
-                                                <span>{!! \Session::get('success') !!}</span>
-                                            </div>
-                                        @endif
-
-                                        <div class="table-responsive">
-                                            <table id="users_table"
-                                                class="table table-bordered table-striped table-hover" role="grid"
-                                                style="width: 100%;  height:100%;" cellspacing="0" cellpadding="0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Nome</th>
-                                                        <th>Email</th>
-                                                        <th>Ruolo</th>
-                                                        <th>Data Creazione</th>
-                                                        <th>Ultima Modifica</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card card-collapsable">
+                    <div class="header">
+                        <h2><i class="material-icons">people</i>Elenco degli utenti</h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li>
+                                <a href="javascript:void(0);" class="collapsable-handler">
+                                    <i class="material-icons">vertical_align_center</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body body-collapsable open">
+                        @if ($errors->any())
+                            <div id="errors-container" class="alert alert-danger alert-dismissible">
+                                <span>Si è verificato un errore: {{ $errors->first() }}</span>
                             </div>
+                        @endif
+
+                        @if (Session::has('success'))
+                            <div id="msg-container" class="alert alert-success alert-dismissible">
+                                <span>{!! \Session::get('success') !!}</span>
+                            </div>
+                        @endif
+
+                        <div class="table-responsive">
+                            <table id="users_table"
+                                class="table table-bordered table-striped table-hover" role="grid"
+                                style="width: 100%;  height:100%;" cellspacing="0" cellpadding="0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Ruolo</th>
+                                        <th>Data Creazione</th>
+                                        <th>Ultima Modifica</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 @endsection
 
 
