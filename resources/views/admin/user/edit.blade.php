@@ -103,7 +103,7 @@
                                         <a href="{{ route('admin.user.index') }}" class="btn waves-effect btn-default ml-2">
                                             <i class="material-icons">undo</i><span>Indietro</span></a>
 
-                                        <a href="{{ route('user.print', $user->id) }}" data-id="{{ $user->id }}" class="btn waves-effect btn-default ml-2" title="Stampa">
+                                        <a href="{{ route('admin.user.print', $user->id) }}" data-id="{{ $user->id }}" class="btn waves-effect btn-default ml-2" title="Stampa">
                                             <i class="material-icons">print</i><span class="mr-1">Stampa</span></a>
 
                                         @if ($user->id != Auth::user()->id)
