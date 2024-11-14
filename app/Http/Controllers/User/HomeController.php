@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers\User;
 
 use Illuminate\View\View;
 
-class HomeController extends UsersController
+class HomeController extends UserController
 {
     /**
      * Display the user dashboard's home page.

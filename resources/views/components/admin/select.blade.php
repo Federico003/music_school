@@ -1,4 +1,4 @@
-@props(['name', 'label', 'description', 'options', 'check', 'required', 'disabled'])
+@props(['name', 'label', 'description', 'options', 'check', 'required', 'disabled', 'readonly'])
 
 <label for="{{ $name }}">{{ $label }} {!! ($required ?? false) ? '<span class="required">*</span>' : '' !!}</label>
 <div class="form-group">
@@ -7,8 +7,9 @@
                 class="form-control" 
                 name="{{ $name }}" 
                 {{ ($required ?? false) ? 'required' : '' }} 
-                @disabled(($disabled ?? false) == true) >
-            
+                @disabled(($disabled ?? false) == true) 
+                @readonly(($readonly ?? false) == true) >
+
             @foreach ($options as $key => $option)
                 <option value="{{ $key }}" @selected( old($name) ? $key == old($name) : $key == ($check ?? null) ) >{{ $option }}</option>
             @endforeach

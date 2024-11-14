@@ -59,10 +59,10 @@ class UserController extends AdminController
 
         return DataTables::of($users)
             ->addColumn('actions', function ($user) {
-                $buttons = '<span class="mr-1"><a href="user/'.$user->id.'/edit" data-id="'.$user->id.'" class="btn waves-effect btn-primary" title="Modifica"><i class="material-icons">edit</i></a></span>';
-                $buttons .= '<span class="mr-1"><a href="users/'.$user->id.'/print" data-id="'.$user->id.'" class="btn waves-effect btn-default" title="Stampa"><i class="material-icons">print</i></a></span>';
+                $buttons = '<span class="mr-1"><a href="user/'.$user->id.'/edit" data-id="'.$user->id.'" class="btn waves-effect btn-sm btn-primary" title="Modifica"><i class="material-icons">edit</i><span>Modifica</span></a></span>';
+                $buttons .= '<span class="mr-1"><a href="users/'.$user->id.'/print" data-id="'.$user->id.'" class="btn waves-effect btn-sm btn-default" title="Stampa"><i class="material-icons">print</i><span>Stampa</span></a></span>';
                 if (Auth::user()->id !== $user->id) {
-                    $buttons .= '<span class="mr-1"><button id="'.$user->id.'" class="btn waves-effect btn-danger btn-delete" title="Elimina"><i class="material-icons">delete</i></button></span>';
+                    $buttons .= '<span class="mr-1"><button id="'.$user->id.'" class="btn waves-effect btn-sm btn-danger btn-delete" title="Elimina"><i class="material-icons">delete</i><span>Elimina</span></button></span>';
                 }
 
                 return $buttons;
@@ -162,8 +162,15 @@ class UserController extends AdminController
         if (isset($validator) && $validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
+        
         $validatedData = $request->validated();
+
+        // Un utente non può modificare il suo ruolo o lo stato 
+        if ($user->id == Auth::user()->id) {
+            $validatedData['role'] = Auth::user()->getRoleName();
+            $validatedData['status'] = Auth::user()->status;
+        }
+
         $this->userService->updateUser($user, $validatedData);
         $this->userService->assignRoleToUser($user, $validatedData['role']);
 

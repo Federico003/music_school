@@ -12,6 +12,7 @@ Route::get('/', function () {
  */
 Auth::routes(['register' => true, 'confirm' => false, 'reset' => true, 'verify' => false]);
 
+// Rotta per il logout
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', 'role:admin', 'status'])->group(function () {
@@ -34,8 +35,8 @@ Route::middleware(['auth', 'role:admin', 'status'])->prefix('admin')->name('admi
     Route::get('/users/{user}/print', [App\Http\Controllers\Admin\UserController::class, 'print'])->name('users.print'); //bottone stampa nella DataTable
 });
 
-Route::get('/users/{user}/print', [App\Http\Controllers\Admin\UserController::class, 'print'])->name('users.print'); //bottone stampa nel modifica utente
+Route::get('/user/{user}/print', [App\Http\Controllers\Admin\UserController::class, 'print'])->name('user.print'); //bottone stampa nel modifica utente
 
 Route::middleware(['auth', 'role:user', 'status'])->prefix('user')->name('user.')->group(function () {
-    Route::get('/home', [App\Http\Controllers\Users\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [App\Http\Controllers\User\HomeController::class, 'index'])->name('home');
 });

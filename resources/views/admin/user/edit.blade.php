@@ -64,15 +64,14 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <div class="row clearfix">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="row clearfix">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
                                                 <x-admin.select :name="'role'" :options="$roles" :label="'Ruolo'"
-                                                    :description="'Ruolo dell utente'" :check="old('role') ?? $user->roles->first()->name" :required="true"
-                                                    :disabled="$user->id == Auth::user()->id ? true : false" />
+                                                    :description="'Ruolo dell utente'" :check="old('role') ?? $user->roles->first()->name" :required="true" />
                                             </div>
                                         </div>
                                     </div>
@@ -85,8 +84,7 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
                                                 <x-admin.select :name="'status'" :options="$status" :label="'Stato'"
-                                                    :description="'Stato dell utente'" :check="old('status') ?? $user->status" :required="true"
-                                                    :disabled="$user->id == Auth::user()->id ? true : false" />
+                                                    :description="'Stato dell utente'" :check="old('status') ?? $user->status" :required="true" />
                                             </div>
                                         </div>
                                     </div>
@@ -105,13 +103,12 @@
                                         <a href="{{ route('admin.user.index') }}" class="btn waves-effect btn-default ml-2">
                                             <i class="material-icons">undo</i><span>Indietro</span></a>
 
+                                        <a href="{{ route('user.print', $user->id) }}" data-id="{{ $user->id }}" class="btn waves-effect btn-default ml-2" title="Stampa">
+                                            <i class="material-icons">print</i><span class="mr-1">Stampa</span></a>
+
                                         @if ($user->id != Auth::user()->id)
                                             <x-admin.ajax-del-button-link :url="'admin/user'" :resource="$user" />
                                         @endif
-
-                                        <!--$buttons .= '<span class="mr-1"><a href="users/'.$user->id.'/print" data-id="'.$user->id.'" class="btn waves-effect btn-default" title="Stampa"><i class="material-icons">print</i></a></span>';-->
-                                        <a href="{{ route('users.print', $user->id) }}" data-id="{{ $user->id }}" class="btn waves-effect btn-default ml-2" title="Stampa">
-                                            <i class="material-icons">print</i><span class="mr-1">Stampa</span></a>
                                     </div>
                                 </div>
                             </div>
