@@ -127,13 +127,6 @@ class UserController extends AdminController
         return view('admin.user.import');
     }
 
-    public function import(Request $request)
-    {
-        Excel::import(new UserImport, $request->file('file'));
-
-        return view('admin.user.import'); // Passa i dati alla vista
-    }
-
     /**
      * Show the form for editing the specified user.
      *
@@ -186,6 +179,18 @@ class UserController extends AdminController
     public function destroy(User $user): JsonResponse
     {
         return $this->userService->deleteUser($user);
+    }
+
+    /**
+     * Show the form for Inport users from an Excel file.
+     *
+     * @return View The view displaying the user creation form.
+     */
+    public function import(Request $request)
+    {
+        Excel::import(new UserImport, $request->file('file'));
+
+        return view('admin.user.import'); // Passa i dati alla vista
     }
 
     /**
