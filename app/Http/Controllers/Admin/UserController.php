@@ -43,9 +43,7 @@ class UserController extends AdminController
      */
     public function index(): View
     {
-        $users = User::all();
-
-        return view('admin.user.index', compact('users'));
+        return view('admin.user.index');
     }
 
     /**
