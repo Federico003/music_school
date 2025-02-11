@@ -7,6 +7,7 @@ use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Imports\UserImport;
 use App\Models\User;
+use App\Models\Course;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -18,6 +19,7 @@ use Log;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends AdminController
 {
@@ -211,4 +213,23 @@ class UserController extends AdminController
             Log::info($e->getMessage());
         }
     }
+
+    public function show($id){
+        // Trova l'utente nel database
+        $user = User::findOrFail($id);
+
+        // Recupera tutti i corsi
+        $courses = Course::all(); 
+
+        // Recupera i corsi già assegnati all'utente
+        $assignedCourses = DB::table('teachers_courses')
+            ->where('teacher_id', $user->id)
+            ->pluck('course_id')
+            ->toArray();
+
+
+        // Restituisci la vista con i dettagli dell'utente e i corsi già assegnati
+        return view('admin.user.show', compact('user', 'courses', 'assignedCourses'));
+    }
+
 }

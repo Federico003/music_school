@@ -83,13 +83,8 @@
                         data: 'id'
                     },
                     {
-                        data: 'name',
-                        render: function(data, type, row) {
-                            var url = '{{ url("admin/user") }}/' + row.id;
-                            return '<a href="' + url + '">' + data + '</a>';
-                        }
+                        data: 'name'
                     },
-
                     {
                         data: 'email'
                     },

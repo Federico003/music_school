@@ -66,6 +66,11 @@
 
     <!-- Vue Axios -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <link href="path/to/multiselect.css" media="screen" rel="stylesheet" type="text/css">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
 </head>
 
 <body class="theme-white">

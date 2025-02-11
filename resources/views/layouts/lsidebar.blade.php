@@ -39,6 +39,13 @@
                         <span>Utenti</span>
                     </a>
                 </li>
+                <li
+                    class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['user'], 1) ? 'active' : '' }}">
+                    <a href="{{ route('admin.course.index') }}">
+                        <i class="material-icons">book</i>
+                        <span>Corsi</span>
+                    </a>
+                </li>
                 <hr />
                 <!-- Sistema -->
                 <li>

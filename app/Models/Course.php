@@ -8,92 +8,38 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail
+class Course extends Authenticatable implements MustVerifyEmail
 {
-    use EncryptedAttribute, HasFactory, HasRoles;
+    use HasFactory, HasRoles;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'last_login',
-        'status',
-    ];
+    protected $fillable = ['name', 'description', 'created_at', 'updated_at'];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be encrypted/decrypted.
-     *
-     * @var array<int, string>
-     */
-    protected $encryptable = [
-        'name',
-        'email',
-    ];
-
-    /**
-     * User roles
-     *
-     * @var array<string, string>
-     */
-    protected static $roles = [
-        'admin' => 'Amministratore',
-        'user' => 'Utente',
-        'student' => 'Studente',
-        'teacher' => 'Insegnante'
-    ];
 
     /**
      * User statuses
      *
      * @var array<int, string>
      */
-    protected static $statuses = [
+    /*protected static $statuses = [
         1 => 'Attivo',
         0 => 'Disattivo',
-    ];
-
-    /**
-     * Get the available user roles.
-     *
-     * @return array<string, string> An array of user roles where keys are role codes and values are role names.
-     */
-    public static function getRoles(): array
-    {
-        return self::$roles;
-    }
+    ];*/
 
     /**
      * Get the available user statuses.
      *
      * @return array<int, string> An array of user statuses where keys are status codes and values are status names.
      */
-    public static function getStatuses(): array
+    /*public static function getStatuses(): array
     {
         return self::$statuses;
-    }
+    }*/
 
-    /**
-     * Get the user's role name.
-     */
-    public function getRoleName(): string
-    {
-        return self::$roles[$this->getRoleNames()->first()];
-    }
 
     /**
      * Boot the User model and set up event listeners for creating, updating, and deleting actions.
@@ -140,12 +86,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return [
             'name' => 'string',
-            'email' => 'string',
-            'password' => 'hashed',
-            'last_login' => 'datetime',
-            'status' => 'boolean',
+            'description' => 'string',
         ];
     }
-
-    
 }

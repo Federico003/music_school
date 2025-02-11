@@ -6,7 +6,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="header">
-                        <h2><i class="material-icons">list</i>Elenco degli utenti</h2>
+                        <h2><i class="material-icons">list</i>Elenco dei corsi</h2>
                         <ul class="header-dropdown m-r--5">
                             <li class="dropdown">
                                 <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -14,16 +14,16 @@
                                     <i class="material-icons">more_vert</i>
                                 </a>
                                 <ul class="dropdown-menu pull-right">
-                                    <li><a href="{{ route('admin.user.create') }}" role="button" onclick=""
-                                            name="crea_nuovo" id="nuovo_utente" class=" waves-effect waves-block"
-                                            value="Nuovo utente"><i class="material-icons">add</i> Nuovo utente</a>
+                                    <li><a href="{{ route('admin.course.create') }}" role="button" onclick=""
+                                            name="crea_nuovo" id="nuovo_corso" class=" waves-effect waves-block"
+                                            value="Nuovo corso"><i class="material-icons">add</i> Nuovo corso</a>
                                     </li>
-                                    <li><a href="{{ route('admin.user.exportToExcel') }}" role="button" onclick=""
+                                    <li><a href="{{ route('admin.course.exportToExcel') }}" role="button" onclick=""
                                             name="esporta" id="esporta" class=" waves-effect waves-block"
                                             value="Esporta file Excel"><i class="material-icons">file_download</i> Esporta
                                             su Excel</a>
                                     </li>
-                                    <li><a href="{{ route('admin.user.showImport') }}" role="button" onclick=""
+                                    <li><a href="{{ route('admin.course.showImport') }}" role="button" onclick=""
                                         name="esporta" id="esporta" class=" waves-effect waves-block"
                                         value="Importa file Excel"><i class="material-icons">file_upload</i> Importa
                                         da Excel</a>
@@ -34,17 +34,15 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table id="users_table" class="table table-bordered table-striped table-hover"role="grid"
+                            <table id="courses_table" class="table table-bordered table-striped table-hover"role="grid"
                                 aria-describedby="DataTables_Table_1_info" style="width: 100%;  height:100%;"
                                 cellspacing="0" cellpadding="0" data-toggle="dataTable"
-                                data-ajax-url="{{ route('admin.user.list') }}">
+                                data-ajax-url="{{ route('admin.course.list') }}">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Nome</th>
-                                        <th>Email</th>
-                                        <th>Ruolo</th>
-                                        <th>Stato</th>
+                                        <th>Descrizione</th>
                                         <th>Data di creazione</th>
                                         <th>Ultima modifica</th>
                                         <th>Azioni</th>
@@ -67,13 +65,13 @@
     <script type="text/javascript">
         var table;
         $(document).ready(function() {
-            table = $('#users_table').DataTable({
+            table = $('#courses_table').DataTable({
                 responsive: true,
                 processing: true,
                 serverSide: true,
                 deferRender: true,
                 ajax: {
-                    url: $('#users_table').data('ajax-url'),
+                    url: $('#courses_table').data('ajax-url'),
                     type: "post",
                     data: {
                         _token: $('meta[name="csrf-token"]').attr('content'),
@@ -84,25 +82,11 @@
                     },
                     {
                         data: 'name',
-                        render: function(data, type, row) {
-                            var url = '{{ url("admin/user") }}/' + row.id;
-                            return '<a href="' + url + '">' + data + '</a>';
-                        }
                     },
 
+
                     {
-                        data: 'email'
-                    },
-                    {
-                        data: 'rolename',
-                        searchable: false
-                    },
-                    {
-                        data: 'status',
-                        searchable: true,
-                        render: function(data, type, row) {
-                            return data ? "Abilitato" : "Disabilitato";
-                        }
+                        data: 'description'
                     },
                     {
                         data: 'created_at',
@@ -141,7 +125,7 @@
                 $('.btn-delete').on('click', function(event) {
                     event.preventDefault();
                     var id = $(this).attr('id');
-                    var url = '{{ route('admin.user.destroy', ':id') }}';
+                    var url = '{{ route('admin.course.destroy', ':id') }}';
                     url = url.replace(':id', id);
                     swal({
                         title: "Sei sicuro?",
