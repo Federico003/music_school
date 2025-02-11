@@ -71,3 +71,7 @@ _ide_helper.php
 _ide_helper_models.php
 .phpstorm.meta.php
 /.DS_Store
+
+
+
+storage/credentials.json
