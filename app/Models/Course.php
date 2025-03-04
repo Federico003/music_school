@@ -89,4 +89,25 @@ class Course extends Authenticatable implements MustVerifyEmail
             'description' => 'string',
         ];
     }
+
+    /*public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class, 'teachers_courses'); // La tabella pivot è 'teachers_courses'
+    }*/
+
+    public function teachers()
+{
+    return $this->belongsToMany(User::class, 'teachers_courses', 'course_id', 'teacher_id');
+}
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class, 'course_enrollment_id');
+    }
+
+    public function enrollments()
+{
+    return $this->hasMany(CourseEnrollment::class);
+}
+
 }

@@ -1,6 +1,8 @@
-@props(['name', 'label', 'description', 'value', 'required'])
+@props(['name', 'label' => null, 'description', 'value', 'required'])
 
-<label for="{{ $name }}">{{ $label }} {!! ($required ?? false) ? '<span class="required">*</span>' : '' !!}</label>
+<label for="{{ $name }}">{{ $label }} 
+    {!! ($required ?? false) ? '' : '' !!} {{-- Rimuovi l'asterisco --}}
+</label>
 <div class="form-group">
     <div class="form-line {{ $errors->has($name) ? 'error' : '' }}">
         <input  type="email" 

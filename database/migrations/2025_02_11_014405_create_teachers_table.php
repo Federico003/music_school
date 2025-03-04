@@ -13,21 +13,29 @@ class CreateTeachersTable extends Migration
         if (!Schema::hasTable('teachers')) {
             Schema::create('teachers', function (Blueprint $table) {
                 $table->unsignedBigInteger('id')->primary(); // Stessa struttura della view
-                //$table->string('name');
+                $table->string('name');   // Nome insegnante
+                $table->string('email')->unique();
+                $table->timestamps();
             });
         }
 
         // Popolare la tabella con i dati iniziali
         DB::statement("
-            INSERT INTO teachers (id)
-            SELECT model_id FROM model_has_roles
-            JOIN roles ON model_has_roles.role_id = roles.id
-            WHERE roles.name = 'teacher';
+            INSERT INTO teachers (id, name, email, created_at, updated_at) 
+                SELECT users.id, users.name, users.email, users.created_at, users.updated_at
+                FROM users
+                JOIN model_has_roles ON users.id = model_has_roles.model_id
+                JOIN roles ON model_has_roles.role_id = roles.id
+                WHERE roles.name = 'teacher';
         ");
+
+
     }
 
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;'); // Disabilita i vincoli
         Schema::dropIfExists('teachers');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;'); // Riabilita i vincoli
     }
 }

@@ -57,6 +57,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'teacher' => 'Insegnante'
     ];
 
+    public static function getTranslatedRole($role)
+{
+    return self::$roles[$role] ?? $role;
+}
+
     /**
      * User statuses
      *
@@ -129,6 +134,14 @@ class User extends Authenticatable implements MustVerifyEmail
         self::deleted(function () {
             //Log::info('User deleted');
         });
+
+        static::creating(function ($user) {
+            $user->initial = strtoupper(substr($user->name, 0, 1));
+        });
+
+        static::updating(function ($user) {
+            $user->initial = strtoupper(substr($user->name, 0, 1));
+        });
     }
 
     /**
@@ -146,6 +159,16 @@ class User extends Authenticatable implements MustVerifyEmail
             'status' => 'boolean',
         ];
     }
+
+    /*public function courses()
+{
+    return $this->belongsToMany(Teacher::class, 'course_enrollments');
+}*/
+
+public function courses()
+{
+    return $this->belongsToMany(Course::class, 'teachers_courses', 'teacher_id', 'course_id');
+}
 
     
 }

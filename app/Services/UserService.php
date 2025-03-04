@@ -63,12 +63,19 @@ class UserService
      * @param  User  $user  The user to assign the role to.
      * @param  string  $roleName  The name of the role to assign.
      */
-    public function assignRoleToUser(User $user, string $roleName): void
+    /*public function assignRoleToUser(User $user, string $roleName): void
     {
         $role = Role::where('name', $roleName)->first();
 
         if ($role) {
             $user->assignRole($role);
         }
-    }
+    }*/
+
+    public function assignRoleToUser(User $user, string $role): void
+{
+    $user->roles()->detach(); // Rimuove tutti i ruoli
+    $user->assignRole($role);
+}
+
 }

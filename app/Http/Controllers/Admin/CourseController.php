@@ -18,6 +18,8 @@ use Log;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Crypt;
+//use App\Exports\CourseExport;
 
 class CourseController extends AdminController
 {
@@ -128,7 +130,7 @@ class CourseController extends AdminController
      */
     public function exportToExcel()
     {
-        return Excel::download(new CoursesExport, time().'-Utenti.xlsx');
+        return Excel::download(new CoursesExport, time().'-Corsi.xlsx');
     }
 
     /**
@@ -233,6 +235,27 @@ class CourseController extends AdminController
             Log::error($e->getMessage());
         }
     }
+
+
+public function getCourses(Request $request)
+{
+    $courses = Course::with('teachers')->get();
+
+    $courses = $courses->map(function ($course) {
+        $course->teachers = $course->teachers->map(function ($teacher) {
+            try {
+                $teacher->name = Crypt::decryptString($teacher->name);
+            } catch (\Exception $e) {
+                $teacher->name = "Nome non disponibile";
+            }
+            return $teacher;
+        });
+        return $course;
+    });
+
+    return response()->json($courses);
+}
+
 
     
 }

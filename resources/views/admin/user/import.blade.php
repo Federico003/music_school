@@ -27,7 +27,7 @@
                                 <em>(Carica il file Utenti.xlsx per aggiornare l'elenco delle rotte)</em>
                             </div>
                             <div class="fallback">
-                                <input name="file" type="file" accept=".xslx"  multiple />
+                                <input name="file" type="file" accept=".xlsx"  multiple />
                             </div>
                         </form>
                     </div>

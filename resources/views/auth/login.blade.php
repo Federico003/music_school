@@ -62,7 +62,8 @@
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <img src="/images/logo@2x.png" width="220" alt="{{ config('app.name') }}" />
+            <img src="{{asset('images/rma360x100.png') }}" width="220" alt="{{ config('app.name') }}" />
+            
         </div>
         <div class="card">
             <div class="body">

@@ -24,6 +24,10 @@ class CreateCoursesTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;'); // Disabilita i vincoli
+        Schema::dropIfExists('teachers_courses'); // Elimina prima la tabella pivot
+        Schema::dropIfExists('courses'); // Ora si può eliminare senza errori
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;'); // Riabilita i vincoli
     }
 };

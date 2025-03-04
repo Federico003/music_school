@@ -12,6 +12,11 @@
         {{ config('app.name', 'Boilerplate') }}
     </title>
 
+    <link href="path/to/multiselect.css" media="screen" rel="stylesheet" type="text/css">
+    
+    <!-- CSS Calendario -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+   
 
     <!-- Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -52,9 +57,11 @@
     <!-- Dropzone Css -->
     <link href="{{ asset('plugins/dropzone/dropzone.css') }}" rel="stylesheet">
 
+    
     <!-- AdminBSB Theme -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/themes/theme-custom.css') }}">
+
 
     <!-- Custom Css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin/custom.css') }}">
@@ -67,9 +74,6 @@
     <!-- Vue Axios -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <link href="path/to/multiselect.css" media="screen" rel="stylesheet" type="text/css">
-
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
 </head>
 
@@ -174,6 +178,9 @@
     @yield('script')
 
     <script src="{{ asset('js/admin/admin.js') }}"></script>
+
+    <!-- Full Calendar -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 
 </body>
 

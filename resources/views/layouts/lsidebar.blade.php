@@ -41,9 +41,30 @@
                 </li>
                 <li
                     class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['user'], 1) ? 'active' : '' }}">
+                    <a href="{{ route('admin.user.teachers') }}">
+                        <i class="material-icons">school</i>
+                        <span>Insegnanti</span>
+                    </a>
+                </li>
+                <li
+                    class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['user'], 1) ? 'active' : '' }}">
+                    <a href="{{ route('admin.user.students') }}">
+                        <i class="material-icons">people</i>
+                        <span>Studenti</span>
+                    </a>
+                </li>
+                <li
+                    class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['user'], 1) ? 'active' : '' }}">
                     <a href="{{ route('admin.course.index') }}">
                         <i class="material-icons">book</i>
                         <span>Corsi</span>
+                    </a>
+                </li>
+                <li
+                    class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['user'], 1) ? 'active' : '' }}">
+                    <a href="{{ route('admin.lesson.index') }}">
+                        <i class="material-icons">date_range</i>
+                        <span>Lezioni</span>
                     </a>
                 </li>
                 <hr />
@@ -54,6 +75,29 @@
                         <span>Log</span>
                     </a>
                 </li>
+            @endrole
+
+            @role(['teacher'])
+            <li class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['home'], 1) ? 'active' : '' }}">
+                <a href="{{ route('teacher.home') }}">
+                    <i class="material-icons">home</i>
+                    <span>Home</span>
+                </a>
+            </li>
+
+            <li class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['user'], 1) ? 'active' : '' }}">
+                <a href="{{ route('teacher.student.index') }}">
+                    <i class="material-icons">list</i>
+                    <span>Lista Studenti</span>
+                </a>
+            </li>
+
+            <li class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['user'], 1) ? 'active' : '' }}">
+                <a href="{{ route('teacher.lesson.index') }}">
+                    <i class="material-icons">date_range</i>
+                    <span>Calendario Lezioni</span>
+                </a>
+            </li>
             @endrole
 
             <!-- Customer --> 

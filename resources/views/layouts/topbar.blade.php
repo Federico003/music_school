@@ -18,7 +18,7 @@
                 data-target="#navbar-collapse" aria-expanded="false"></a>
             <a href="javascript:void(0);" class="bars"></a>
             <a class="navbar-brand" href="{{ homeRoute() }}" style="padding: 0px;">
-                <img src="/image/logo-rma@1x.png" width="250" alt="{{ config('app.name') }}" />
+                <img src="{{ asset('images/rma_logo.png') }}" width="180" alt="{{ config('app.name') }}" />
             </a>
         </div>
     </div>

@@ -66,4 +66,13 @@ class CourseImport implements ToCollection
 
         return trim($value);
     }
+
+    public function model(array $row)
+    {
+        // Usa il modello Course per salvare i dati direttamente nella tabella 'courses'
+        return new Course([
+            'name' => $row[0],       // Prima colonna del file Excel
+            'description' => $row[1], // Seconda colonna del file Excel
+        ]);
+    }
 }

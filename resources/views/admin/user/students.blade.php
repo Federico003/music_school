@@ -8,25 +8,49 @@
                     <div class="header">
                         <h2><i class="material-icons">list</i>Elenco degli utenti</h2>
                         <ul class="header-dropdown m-r--5">
-                            <li class="dropdown">
+                            <!-- Pulsanti per desktop -->
+                            <button type="button" class="btn bg-deep-orange waves-effect"
+                                    onclick="window.location.href='{{ route('admin.user.create') }}'">
+                                <i class="material-icons">add</i>
+                                <span>NUOVO UTENTE</span>
+                            </button>
+                        
+                            <button type="button" class="btn btn-default waves-effect"
+                                    onclick="window.location.href='{{ route('admin.user.exportToExcel') }}'">
+                                <i class="material-icons">file_download</i>
+                                <span>ESPORTA UTENTI</span>
+                            </button>
+                        
+                            <button type="button" class="btn btn-default waves-effect"
+                                    onclick="window.location.href='{{ route('admin.user.showImport') }}'">
+                                <i class="material-icons">file_upload</i>
+                                <span>IMPORTA UTENTI</span>
+                            </button>
+                        
+                            <!-- Dropdown per mobile -->
+                            <li class="dropdown" style="display: none;"> <!-- Nascondi di default -->
                                 <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                     aria-haspopup="true" aria-expanded="false">
                                     <i class="material-icons">more_vert</i>
                                 </a>
                                 <ul class="dropdown-menu pull-right">
-                                    <li><a href="{{ route('admin.user.create') }}" role="button" onclick=""
-                                            name="crea_nuovo" id="nuovo_utente" class=" waves-effect waves-block"
-                                            value="Nuovo utente"><i class="material-icons">add</i> Nuovo utente</a>
+                                    <li>
+                                        <a href="{{ route('admin.user.create') }}" role="button" onclick=""
+                                            name="crea_nuovo" id="nuovo_utente" class="waves-effect waves-block">
+                                            <i class="material-icons">add</i> Nuovo utente
+                                        </a>
                                     </li>
-                                    <li><a href="{{ route('admin.user.exportToExcel') }}" role="button" onclick=""
-                                            name="esporta" id="esporta" class=" waves-effect waves-block"
-                                            value="Esporta file Excel"><i class="material-icons">file_download</i> Esporta
-                                            su Excel</a>
+                                    <li>
+                                        <a href="{{ route('admin.user.exportToExcel') }}" role="button" onclick=""
+                                            name="esporta" id="esporta" class="waves-effect waves-block">
+                                            <i class="material-icons">file_download</i> Esporta su Excel
+                                        </a>
                                     </li>
-                                    <li><a href="{{ route('admin.user.showImport') }}" role="button" onclick=""
-                                        name="esporta" id="esporta" class=" waves-effect waves-block"
-                                        value="Importa file Excel"><i class="material-icons">file_upload</i> Importa
-                                        da Excel</a>
+                                    <li>
+                                        <a href="{{ route('admin.user.showImport') }}" role="button" onclick=""
+                                            name="esporta" id="esporta" class="waves-effect waves-block">
+                                            <i class="material-icons">file_upload</i> Importa da Excel
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
@@ -60,6 +84,24 @@
             </div>
         </div>
     </div>
+    <script>
+        function toggleButtons() {
+            const buttons = document.querySelectorAll('.header-dropdown button'); // Seleziona tutti i pulsanti
+            const dropdown = document.querySelector('.header-dropdown .dropdown'); // Seleziona il dropdown
+    
+            if (window.innerWidth <= 768) { // Se la larghezza è <= 768px (mobile)
+                buttons.forEach(button => button.style.display = 'none'); // Nascondi i pulsanti
+                dropdown.style.display = 'block'; // Mostra il dropdown
+            } else { // Se la larghezza è > 768px (desktop)
+                buttons.forEach(button => button.style.display = 'inline-block'); // Mostra i pulsanti
+                dropdown.style.display = 'none'; // Nascondi il dropdown
+            }
+        }
+    
+        // Esegui la funzione al caricamento della pagina e al ridimensionamento della finestra
+        window.onload = toggleButtons;
+        window.onresize = toggleButtons;
+    </script>
 @endsection
 
 @section('script')
@@ -73,18 +115,24 @@
                 serverSide: true,
                 deferRender: true,
                 ajax: {
-                    url: $('#users_table').data('ajax-url'),
-                    type: "post",
-                    data: {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                    },
+                url: "{{ route('admin.user.list') }}",
+                type: "post",
+                data: function(d) {
+                    d._token = $('meta[name="csrf-token"]').attr('content');
+                    d.role = 'student'; // Filtra solo gli studenti
+                },
                 },
                 columns: [{
                         data: 'id'
                     },
                     {
-                        data: 'name'
+                        data: 'name',
+                        /*render: function(data, type, row) {
+                            var url = '{{ url("admin/user") }}/' + row.id;
+                            return '<a href="' + url + '">' + data + '</a>';
+                        }*/
                     },
+
                     {
                         data: 'email'
                     },

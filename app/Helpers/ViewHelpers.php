@@ -25,6 +25,9 @@ function homeRoute()
     if ($role === 'Utente') {
         return route('user.home');
     }
+    if($role == 'Insegnante'){
+        return route('teacher.home');
+    }
     /*if ($role == null) {
         return route('auth.login');
     }*/

@@ -8,6 +8,26 @@
                     <div class="header">
                         <h2><i class="material-icons">list</i>Elenco dei corsi</h2>
                         <ul class="header-dropdown m-r--5">
+                            <!-- Pulsanti per desktop -->
+                            <button type="button" class="btn bg-deep-orange waves-effect"
+                                    onclick="window.location.href='{{ route('admin.course.create') }}'">
+                                <i class="material-icons">add</i>
+                                <span>NUOVO CORSO</span>
+                            </button>
+                        
+                            <button type="button" class="btn btn-default waves-effect"
+                                    onclick="window.location.href='{{ route('admin.course.exportToExcel') }}'">
+                                <i class="material-icons">file_download</i>
+                                <span>ESPORTA CORSO</span>
+                            </button>
+                        
+                            <button type="button" class="btn btn-default waves-effect"
+                                    onclick="window.location.href='{{ route('admin.course.showImport') }}'">
+                                <i class="material-icons">file_upload</i>
+                                <span>IMPORTA CORSO</span>
+                            </button>
+                        
+                            <!-- Dropdown per mobile -->
                             <li class="dropdown">
                                 <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                     aria-haspopup="true" aria-expanded="false">
@@ -58,6 +78,25 @@
             </div>
         </div>
     </div>
+    <script>
+        function toggleButtons() {
+            const buttons = document.querySelectorAll('.header-dropdown button'); // Seleziona tutti i pulsanti
+            const dropdown = document.querySelector('.header-dropdown .dropdown'); // Seleziona il dropdown
+    
+            if (window.innerWidth <= 768) { // Se la larghezza è <= 768px (mobile)
+                buttons.forEach(button => button.style.display = 'none'); // Nascondi i pulsanti
+                dropdown.style.display = 'block'; // Mostra il dropdown
+            } else { // Se la larghezza è > 768px (desktop)
+                buttons.forEach(button => button.style.display = 'inline-block'); // Mostra i pulsanti
+                dropdown.style.display = 'none'; // Nascondi il dropdown
+            }
+        }
+    
+        // Esegui la funzione al caricamento della pagina e al ridimensionamento della finestra
+        window.onload = toggleButtons;
+        window.onresize = toggleButtons;
+    </script>
+    
 @endsection
 
 @section('script')
