@@ -47,7 +47,7 @@ Route::middleware(['auth', 'role:admin', 'status'])->prefix('admin')->name('admi
     Route::get('/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
     
     // Gestione utenti 
-    Route::resource('user', App\Http\Controllers\Admin\UserController::class);
+    Route::resource('user', App\Http\Controllers\Admin\UserController::class)->except(['show']);
     Route::resource('course', App\Http\Controllers\Admin\CourseController::class)->except(['show']);
     Route::resource('lesson', App\Http\Controllers\Admin\LessonController::class);
     
