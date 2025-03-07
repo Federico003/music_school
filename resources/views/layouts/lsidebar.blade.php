@@ -41,14 +41,14 @@
                 </li>
                 <li
                     class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['user'], 1) ? 'active' : '' }}">
-                    <a href="{{ route('admin.user.teachers') }}">
+                    <a href="{{ route('admin.teachers') }}">
                         <i class="material-icons">school</i>
                         <span>Insegnanti</span>
                     </a>
                 </li>
                 <li
                     class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['user'], 1) ? 'active' : '' }}">
-                    <a href="{{ route('admin.user.students') }}">
+                    <a href="{{ route('admin.students') }}">
                         <i class="material-icons">people</i>
                         <span>Studenti</span>
                     </a>

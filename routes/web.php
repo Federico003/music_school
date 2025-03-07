@@ -39,12 +39,15 @@ Route::get('/admin', function () {
 
 Route::post('/admin/users/{user}/store-courses', [UserController::class, 'storeCourses'])->name('admin.users.storeCourses');
 
-//Route::get('/admin/user/students', [App\Http\Controllers\Admin\UserController::class, 'students'])->name('admin.user.students');
-//Route::get('/admin/user/teachers', [App\Http\Controllers\Admin\UserController::class, 'teachers'])->name('admin.user.teachers');
+//Route::get('/admin/students', [App\Http\Controllers\Admin\UserController::class, 'students'])->name('admin.students');
+//Route::get('/admin/teachers', [App\Http\Controllers\Admin\UserController::class, 'teachers'])->name('admin.teachers');
 
 
 Route::middleware(['auth', 'role:admin', 'status'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
+
+    Route::get('/students', [App\Http\Controllers\Admin\UserController::class, 'students'])->name('students');
+    Route::get('/teachers', [App\Http\Controllers\Admin\UserController::class, 'teachers'])->name('teachers');
     
     // Gestione utenti 
     Route::resource('user', App\Http\Controllers\Admin\UserController::class)->except(['show']);
