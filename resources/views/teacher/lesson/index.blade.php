@@ -6,7 +6,7 @@
         <script>
     document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
-    var currentMonth = ''; // Variabile per tenere traccia del mese attuale
+
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'it',
@@ -57,23 +57,12 @@
         dayHeaderFormat: { weekday: 'long' },
         titleFormat: { year: 'numeric', month: 'long' },
 
-        datesSet: function(info) {
-            let titleEl = document.querySelector('.fc-toolbar-title');
-            if (titleEl) {
-                let currentTitle = titleEl.textContent.trim();
-
-                // Estrai solo il mese e l'anno, ignorando eventuali duplicazioni
-                let titleParts = currentTitle.split(/\s+/); // Divide per spazi
-                let extractedTitle = titleParts.slice(0, 2).join(' '); // Mantiene solo "Febbraio 2025"
-
-                // Se il titolo è diverso dall'ultimo mese salvato, aggiorniamo
-                if (currentMonth !== extractedTitle) {
-                    currentMonth = extractedTitle;
-                    titleEl.textContent = extractedTitle; // Imposta il titolo corretto
-                } else {
-                    // Se il titolo è già corretto, lo resettiamo per evitare concatenazioni strane
-                    titleEl.textContent = currentMonth;
-                }
+        viewDidMount: function(view) {
+        // Controlla la vista corrente e imposta il formato corretto per i giorni
+            if (calendar.view.type === 'timeGridWeek' || calendar.view.type === 'timeGridDay') {
+                calendar.setOption('dayHeaderFormat', { weekday: 'long', day: '2-digit' });
+            } else {
+                calendar.setOption('dayHeaderFormat', { weekday: 'long' });
             }
         }
     });
