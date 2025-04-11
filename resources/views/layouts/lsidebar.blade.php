@@ -70,7 +70,7 @@
                 <li
                     class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['user'], 1) ? 'active' : '' }}">
                     <a href="{{ route('admin.payment.index') }}">
-                        <i class="material-icons">currency-dollar</i>
+                        <i class="material-icons">euro_symbol</i>
                         <span>Pagamenti</span>
                     </a>
                 </li>

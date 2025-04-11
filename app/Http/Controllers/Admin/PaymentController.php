@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
-class PaymentController extends Controller
+class PaymentController extends AdminController
 {
     /**
      * Display a listing of the resource.
