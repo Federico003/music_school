@@ -16,7 +16,7 @@
                     <i class="material-icons">people</i>
                 </div>
                 <div class="content">
-                    <div class="text">CORSI INSEGNATI</div>
+                    <div class="text">CORSI SEGUITI</div>
                     <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">
                         @{{ studentCount }}
                     </div>
@@ -31,9 +31,24 @@
                     <i class="material-icons">person</i>
                 </div>
                 <div class="content">
-                    <div class="text">I MIEI STUDENTI</div>
+                    <div class="text">I MIEI VOTI</div>
                     <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">
                         @{{ activeStudentCount }}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-green hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">euro_symbol</i>
+                </div>
+                <div class="content">
+                    <div class="text">PAGAMENTI</div>
+                    <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">
+                        <!-- @{{ activeStudentCount }} -->
                     </div>
                     
                 </div>
@@ -78,7 +93,7 @@
         data() {
             return {
                 title: '',
-                smallTitle: 'Home dell\'insegnante',
+                smallTitle: 'Home dell\'admin',
                 studentCount: 0, // Inizializza con 0
                 activeStudentCount: 0 // Studenti attivi
             }
@@ -95,7 +110,7 @@
             },
 
             fetchStudentCount: function() {
-                // Fai una richiesta GET per ottenere il numero di studenti totali
+                /* Fai una richiesta GET per ottenere il numero di studenti totali
                 axios.get('/api/student-count') 
                     .then(response => {
                         console.log(response.data); // Verifica cosa contiene la risposta
@@ -115,7 +130,7 @@
                         console.error('Errore nella richiesta API per studenti attivi:', error);
                     });
             }
-
+                */
         },
     }).mount('#app');
 </script>
