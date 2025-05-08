@@ -6,13 +6,13 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="header">
-                        <h2><i class="material-icons">list</i>Elenco degli utenti</h2>
+                        <h2><i class="material-icons">list</i>Elenco degli Studenti</h2>
                         <ul class="header-dropdown m-r--5">
                             <!-- Pulsanti per desktop -->
                             <button type="button" class="btn bg-deep-orange waves-effect"
-                                    onclick="window.location.href='{{ route('admin.user.create') }}'">
+                                    onclick="window.location.href='{{ route('admin.user.createStudent') }}'">
                                 <i class="material-icons">add</i>
-                                <span>NUOVO UTENTE</span>
+                                <span>NUOVO STUDENTE</span>
                             </button>
                         
                             <button type="button" class="btn btn-default waves-effect"

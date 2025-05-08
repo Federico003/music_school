@@ -98,6 +98,20 @@ class UserController extends AdminController
         return view('admin.user.create', compact('roles'));
     }
 
+    public function createStudent(): View
+    {
+        $roles = ['student' => 'Studente'];
+
+        //dd($roles);
+        return view('admin.user.createStudent', compact('roles'));
+    }
+
+    public function createTeacher(): View
+    {
+        $roles = ['teacher' => 'Insegnante'];
+        //dd($roles);
+        return view('admin.user.createTeacher', compact('roles'));
+    }
     /**
      * Store a newly created user in storage.
      *
@@ -118,6 +132,39 @@ class UserController extends AdminController
 
         return Redirect::route(route: 'admin.user.index');
     }
+
+
+    public function storeStudent(UserStoreRequest $request): RedirectResponse
+    {
+        $validator = $request->validator;
+
+        if (isset($validator) && $validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $validatedData = $request->validated();
+        $user = $this->userService->storeUser($validatedData);
+        $this->userService->assignRoleToUser($user, $validatedData['role']);
+
+        return Redirect::route(route: 'admin.students');
+    }
+
+
+    public function storeTeacher(UserStoreRequest $request): RedirectResponse
+    {
+        $validator = $request->validator;
+
+        if (isset($validator) && $validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $validatedData = $request->validated();
+        $user = $this->userService->storeUser($validatedData);
+        $this->userService->assignRoleToUser($user, $validatedData['role']);
+
+        return Redirect::route(route: 'admin.teachers');
+    }
+
 
     /**
      * Export users to an Excel file.
@@ -371,6 +418,35 @@ class UserController extends AdminController
 
     }*/
 
+
+    public  function findTypeUser($id){
+        // Trova l'utente nel database
+        $user = User::findOrFail($id);
+    
+        // Verifica se l'utente ha il ruolo di "student" o "teacher"
+        if ($user->hasRole('student')) {
+            return 'student';
+        } elseif ($user->hasRole('teacher')) {
+            return 'teacher';
+        }
+    
+        return null; // Nessun ruolo trovato
+    }
+    
+    public function returnPageInBaseOfRole($id){
+        $typeUser = $this->findTypeUser($id);
+    
+        if ($typeUser == 'student') {
+            return redirect()->route('admin.user.students');
+        } elseif ($typeUser == 'teacher') {
+            return redirect()->route('admin.user.teachers');
+        }
+    
+        return redirect()->route('admin.user.index'); // Redirect di default
+    
+    }
+
+
     public function storeCourses(Request $request, $id)
 {
     // Trova l'utente
@@ -406,7 +482,7 @@ class UserController extends AdminController
     }
 
     // Redirect con un messaggio di successo
-    return redirect()->route('admin.user.index')->with('success', 'Corsi aggiornati con successo.');
+    return redirect()->route('admin.user.show', $user->id)->with('success', 'Corsi aggiornati con successo.');
 }
 
 

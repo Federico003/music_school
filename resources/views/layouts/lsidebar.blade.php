@@ -67,6 +67,15 @@
                         <span>Lezioni</span>
                     </a>
                 </li>
+
+                <li
+                    class="{{ appSectionName(0) }} {{ appSectionName(1) }} {{ isSectionActive(['user'], 1) ? 'active' : '' }}">
+                    <a href="{{ route('admin.payment.index') }}">
+                        <i class="material-icons">euro_symbol</i>
+                        <span>Pagamenti</span>
+                    </a>
+                </li>
+
                 <hr />
                 <!-- Sistema -->
                 <li>

@@ -61,8 +61,16 @@
 
                 <div class="card card-about-me">
                     <div class="header" style="text-align: center;">
-                        <a href="{{ route('admin.user.index') }}" class="btn btn-primary btn-xl ">
-                            <i class="material-icons">undo</i><span>INDIETRO</span></a>
+                        @if($user->roles->first()->name == 'teacher')
+                            <a href="{{ route('admin.teachers') }}" class="btn btn-primary btn-xl ">
+                                <i class="material-icons">undo</i><span>INDIETRO</span></a>
+                        @elseif($user->roles->first()->name == 'student')
+                            <a href="{{ route('admin.students') }}" class="btn btn-primary btn-xl ">
+                                <i class="material-icons">undo</i><span>INDIETRO</span></a>
+                        @else
+                            <a href="{{ route('admin.user.index') }}" class="btn btn-primary btn-xl ">
+                                <i class="material-icons">undo</i><span>INDIETRO</span></a>
+                        @endif
                     </div>
                     
                 </div>

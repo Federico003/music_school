@@ -269,7 +269,7 @@ function handleCourseSelectChange() {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Modifica Lezione</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
             </div>
             <div class="modal-body">
                 <form id="editLessonForm">
@@ -312,35 +312,37 @@ function handleCourseSelectChange() {
         // Ricostruisci il modal con i nuovi dati
         var modalContent = `
             <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Modifica Lezione</h5>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <form id="editLessonForm">
-                @csrf <!-- Aggiungi il token CSRF -->
-                <div class="form-group">
-                    <label for="lessonDate">Data</label>
-                    <input type="date" id="lessonDate" name="lessonDate" class="form-control" value="${response.lesson.day}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modifica Lezione</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editLessonForm">
+                            @csrf <!-- Aggiungi il token CSRF -->
+                            <div class="form-group">
+                                <label for="lessonDate">Data</label>
+                                <input type="date" id="lessonDate" name="lessonDate" class="form-control" value="${response.lesson.day}">
+                            </div>
+                            <div class="form-group">
+                                <label for="lessonTime">Orario</label>
+                                <input type="time" id="lessonTime" name="lessonTime" class="form-control" value="${response.lesson.time.substring(0, 5)}">
+                            </div>
+                            <div class="form-group">
+                                <label for="lessonDuration">Durata (minuti)</label>
+                                <input type="number" id="lessonDuration" name="lessonDuration" class="form-control" value="${response.lesson.duration}">
+                            </div>
+                            <input type="hidden" id="lessonId" name="lessonId" value="${response.lesson.id}">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                            <button type="button" class="btn btn-primary" onclick="updateLesson()">Salva</button>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="lessonTime">Orario</label>
-                    <input type="time" id="lessonTime" name="lessonTime" class="form-control" value="${response.lesson.time.substring(0, 5)}">
-                </div>
-                <div class="form-group">
-                    <label for="lessonDuration">Durata (minuti)</label>
-                    <input type="number" id="lessonDuration" name="lessonDuration" class="form-control" value="${response.lesson.duration}">
-                </div>
-                <input type="hidden" id="lessonId" name="lessonId" value="${response.lesson.id}">
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
-            <button type="button" class="btn btn-primary" onclick="updateLesson()">Salva</button>
-        </div>
-    </div>
-</div>
+            </div>
         `;
 
         $('#editLessonModal').html(modalContent).modal('show');

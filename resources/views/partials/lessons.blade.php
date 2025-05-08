@@ -1,4 +1,3 @@
-ho questa view:
 <div class="table-responsive">
     <table id="lessons_table" class="table table-bordered table-striped table-hover" role="grid"
         aria-describedby="Lessons Table" style="width: 100%; height:100%;" cellspacing="0" cellpadding="0">
@@ -14,7 +13,7 @@ ho questa view:
         @forelse ($lessons as $index => $lesson)
             <tr>
                 <td>{{ $lesson->day }}</td>
-                <td>{{ $lesson->time }}</td>
+                <td>{{ substr($lesson->time, 0, 5) }}</td>
                 <td>{{ $lesson->duration }}</td>
                 <td>
                     <!-- Modifica -->

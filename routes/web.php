@@ -57,6 +57,10 @@ Route::middleware(['auth', 'role:admin', 'status'])->prefix('admin')->name('admi
     //Route::get('/user/students', [App\Http\Controllers\Admin\UserController::class, 'students'])->name('user.students');
     //Route::get('/user/teachers', [App\Http\Controllers\Admin\UserController::class, 'teachers'])->name('user.teachers');
 
+    Route::prefix('payment')->scopeBindings()->name('payment.')->group(function () {
+        Route::get('/index', [App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('index');
+    });
+
     Route::prefix('user')->scopeBindings()->name('user.')->group(function () {
         // Rotte personalizzate gestione utenti 
         /*Route::post('/list', [App\Http\Controllers\Admin\UserController::class, 'list'])->name('list');
@@ -68,7 +72,10 @@ Route::middleware(['auth', 'role:admin', 'status'])->prefix('admin')->name('admi
         Route::get('/students', [App\Http\Controllers\Admin\UserController::class, 'students'])->name('students');
         Route::get('/teachers', [App\Http\Controllers\Admin\UserController::class, 'teachers'])->name('teachers');
 
-
+        Route::get('/createStudent', [App\Http\Controllers\Admin\UserController::class, 'createStudent'])->name('createStudent');
+        Route::post('/storeStudent', [App\Http\Controllers\Admin\UserController::class, 'storeStudent'])->name('storeStudent');
+        Route::get('/createTeacher', [App\Http\Controllers\Admin\UserController::class, 'createTeacher'])->name('createTeacher');
+        Route::post('/storeTeacher', [App\Http\Controllers\Admin\UserController::class, 'storeTeacher'])->name('storeTeacher');
         Route::post('/list', [App\Http\Controllers\Admin\UserController::class, 'list'])->name('list');
         Route::get('/{user}/print', [App\Http\Controllers\Admin\UserController::class, 'print'])->name('print');
         Route::get('/exportToExcel', [App\Http\Controllers\Admin\UserController::class, 'exportToExcel'])->name('exportToExcel');
