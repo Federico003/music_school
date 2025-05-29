@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CourseController;
-use App\Http\Controllers\Admin\LessonController as AdminLessonController;
+use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Teacher\StudentController;
 use App\Http\Controllers\Teacher\LessonController as TeacherLessonController;
 
@@ -47,7 +47,7 @@ Route::middleware(['auth', 'role:admin', 'status'])->prefix('admin')->name('admi
     Route::get('/teachers', [App\Http\Controllers\Admin\UserController::class, 'teachers'])->name('teachers');
     Route::resource('user', App\Http\Controllers\Admin\UserController::class)->except(['show']);
     Route::resource('course', App\Http\Controllers\Admin\CourseController::class)->except(['show']);
-    Route::resource('lesson', App\Http\Controllers\Admin\LessonController::class);
+    //Route::resource('lesson', App\Http\Controllers\Admin\LessonController::class);
     
     //Route::get('/user/students', [App\Http\Controllers\Admin\UserController::class, 'students'])->name('user.students');
     //Route::get('/user/teachers', [App\Http\Controllers\Admin\UserController::class, 'teachers'])->name('user.teachers');
@@ -82,9 +82,11 @@ Route::middleware(['auth', 'role:admin', 'status'])->prefix('admin')->name('admi
         Route::post('/import', [App\Http\Controllers\Admin\CourseController::class, 'import'])->name('import');
     });
     Route::prefix('lesson')->name('lesson.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\LessonController::class, 'show'])->name('index');
         Route::post('/store', [App\Http\Controllers\Admin\LessonController::class, 'store'])->name('store');
         Route::post('/{id}/update', [App\Http\Controllers\Admin\LessonController::class, 'update'])->name('update');
         Route::post('/{id}/delete', [App\Http\Controllers\Admin\LessonController::class, 'destroy'])->name('destroy');
+        Route::get('/events', [App\Http\Controllers\Admin\LessonController::class, 'events'])->name('events');
     });
 });
 

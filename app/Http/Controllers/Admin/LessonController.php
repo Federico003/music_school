@@ -34,12 +34,33 @@ class LessonController extends AdminController
         $this->lessonService = $lessonService;
     }
 
+    public function show(): View
+    {
+         $lessons = Lesson::all();
+
+         $events = $lessons->map(function ($lesson) {
+            $start = Carbon::parse($lesson->day . ' ' . $lesson->time);
+            $end = (clone $start)->addMinutes($lesson->duration);
+
+            return [
+                'id' => $lesson->id,
+                'title' => 'Lezione', // Puoi personalizzarlo con il nome del corso, ecc.
+                'start' => $start->toIso8601String(),
+                'end' => $end->toIso8601String(),
+            ];
+        });
+
+        //dd($events);
+
+        return view('admin.lesson.index');
+    }
+
     public function index(): View
     {
         return view('admin.lesson.index');
     }
 
-        public function store(Request $request)
+    public function store(Request $request)
     {
         $data = $request->validate([
             'course_enrollment_id' => 'required|exists:course_enrollments,id',
@@ -87,7 +108,29 @@ class LessonController extends AdminController
                 'end' => $lesson->day . 'T' . date('H:i', strtotime("+{$lesson->duration} minutes", strtotime($lesson->time))), // Ora di fine
             ];
         });
+        dd($events);
+        return response()->json($events);
+    }
 
+
+    public function events(Request $request)
+    {
+
+        $lessons = Lesson::all();
+
+        $events = $lessons->map(function ($lesson) {
+            $start = Carbon::parse($lesson->day . ' ' . $lesson->time);
+            $end = (clone $start)->addMinutes($lesson->duration);
+
+            return [
+                'id' => $lesson->id,
+                'title' => 'Lezione', // Puoi personalizzarlo con il nome del corso, ecc.
+                'start' => $start->toIso8601String(),
+                'end' => $end->toIso8601String(),
+            ];
+        });
+
+        //dd($events);
         return response()->json($events);
     }
 }

@@ -11,6 +11,7 @@ class Lesson extends Model
     use HasFactory;
 
     protected $fillable = ['course_enrollment_id', 'day', 'time', 'duration'];
+    protected $dates = ['day', 'time'];
 
     // Relazione con CourseEnrollment
     public function courseEnrollment()
