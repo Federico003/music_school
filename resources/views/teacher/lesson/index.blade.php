@@ -34,13 +34,14 @@
         nowIndicator: true,
         dayMaxEvents: true,
         events: function(info, successCallback, failureCallback) {
-            fetch('/lessons/events')
+            fetch('/teacher/lessons/events')
                 .then(response => response.json())
                 .then(data => {
                     successCallback(data);
                 })
                 .catch(error => {
                     failureCallback(error);
+                    console.error('Error fetching events:', error);
                 });
         },
         slotLabelFormat: {

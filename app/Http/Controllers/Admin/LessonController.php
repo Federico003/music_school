@@ -115,8 +115,8 @@ class LessonController extends AdminController
 
     public function events(Request $request)
     {
-
-        $lessons = Lesson::all();
+        // Includiamo le relazioni necessarie
+        $lessons = Lesson::with(['courseEnrollment.teacher', 'courseEnrollment.course'])->get();
 
         $events = $lessons->map(function ($lesson) {
             $start = Carbon::parse($lesson->day . ' ' . $lesson->time);
@@ -124,13 +124,12 @@ class LessonController extends AdminController
 
             return [
                 'id' => $lesson->id,
-                'title' => 'Lezione', // Puoi personalizzarlo con il nome del corso, ecc.
+                'title' => $lesson->courseEnrollment->teacher->name . ' - ' . $lesson->courseEnrollment->course->name,
                 'start' => $start->toIso8601String(),
                 'end' => $end->toIso8601String(),
             ];
         });
 
-        //dd($events);
         return response()->json($events);
     }
 }

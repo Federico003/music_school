@@ -99,6 +99,9 @@ Route::middleware(['auth', 'role:teacher', 'status'])->prefix('teacher')->name('
         Route::post('/lessons/{id}', [App\Http\Controllers\Teacher\StudentController::class, 'showLessons'])->name('lessons');
         Route::post('/{id}', [App\Http\Controllers\Teacher\LessonController::class, 'store'])->name('lessonsStore');
     });
+    Route::get('/lessons', [App\Http\Controllers\Teacher\LessonController::class, 'show'])->name('lessons.index');
+    Route::get('/lessons/events', [App\Http\Controllers\Teacher\LessonController::class, 'events'])->name('lessons.events');
+    
     Route::prefix('lesson')->scopeBindings()->name('lesson.')->group(function() {
         Route::get('/get-lesson-details/{lessonId}', [App\Http\Controllers\Teacher\LessonController::class, 'getLessonDetails'])->name('getLessonDetails');
         Route::post('/update-lesson', [App\Http\Controllers\Teacher\LessonController::class, 'updateLesson'])->name('update-lesson');

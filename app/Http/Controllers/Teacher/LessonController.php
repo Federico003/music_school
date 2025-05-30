@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use App\Services\LessonService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Carbon;
+
 class LessonController extends Controller
 {
     protected LessonService $lessonService;
@@ -250,4 +252,50 @@ public function getLessonsData(Request $request)
 }
 
 
+public function show(): View
+{
+    $lessons = Lesson::all();
+
+    $events = $lessons->map(function ($lesson) {
+        $start = Carbon::parse($lesson->day . ' ' . $lesson->time);
+        $end = (clone $start)->addMinutes($lesson->duration);
+
+        return [
+            'id' => $lesson->id,
+            'title' => $lesson->courseEnrollment->teacher->name . ' - ' . $lesson->courseEnrollment->course->name,
+            'start' => $start->toIso8601String(),
+            'end' => $end->toIso8601String(),
+        ];
+    });
+
+    return view('teacher.lesson.index');
+}
+
+public function events(Request $request)
+{
+    try {
+        $lessons = Lesson::with(['courseEnrollment.teacher', 'courseEnrollment.course', 'courseEnrollment.student'])
+            ->whereHas('courseEnrollment', function ($query) {
+                $query->where('teacher_id', auth()->id());
+            })
+            ->get();
+
+        $events = $lessons->map(function ($lesson) {
+            $start = Carbon::parse($lesson->day . ' ' . $lesson->time);
+            $end = (clone $start)->addMinutes($lesson->duration);
+
+            return [
+                'id' => $lesson->id,
+                'title' => $lesson->courseEnrollment->student->name . ' - ' . $lesson->courseEnrollment->course->name,
+                'start' => $start->toIso8601String(),
+                'end' => $end->toIso8601String(),
+            ];
+        });
+
+        return response()->json($events);
+    } catch (\Exception $e) {
+        \Log::error('Calendar error: ' . $e->getMessage());
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
 }
