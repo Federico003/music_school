@@ -40,4 +40,5 @@ class Teacher extends Model
     {
         return $this->hasMany(Lesson::class, 'course_enrollment_id');
     }
+
 }

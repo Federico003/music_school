@@ -202,7 +202,7 @@ class UserController extends AdminController
     $courses = Course::with('teachers')->get(); 
 
     // Recupera i corsi già assegnati all'utente
-    $assignedCourses = $user->courses->pluck('id')->toArray(); 
+    $assignedCourses = $user->teacherCourses->pluck('id')->toArray(); 
 
     return view('admin.user.show', compact('user', 'roles', 'status', 'courses', 'assignedCourses'));
 }

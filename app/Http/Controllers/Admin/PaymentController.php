@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Models\Student;
+use App\Models\User;
+use App\Models\Course;
 
 class PaymentController extends AdminController
 {
@@ -12,8 +15,19 @@ class PaymentController extends AdminController
      */
     public function index()
     {
-        return view('admin.payment.index');
+        $students = User::role('student')->get();
+        //$courses = User::with('course')->get();
+
+        return view('admin.payment.index', compact('students'));
     }
+
+    public function getStudentCourses($studentId)
+    {
+        $user = User::find($studentId);
+        $corsi = $user->studentCourses; // qui ottieni i corsi dello studente
+        return response()->json($corsi);
+    }
+
 
     /**
      * Show the form for creating a new resource.

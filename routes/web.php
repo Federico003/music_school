@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Teacher\StudentController;
 use App\Http\Controllers\Teacher\LessonController as TeacherLessonController;
+use App\Http\Controllers\Admin\PaymentController;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -53,7 +54,8 @@ Route::middleware(['auth', 'role:admin', 'status'])->prefix('admin')->name('admi
     //Route::get('/user/teachers', [App\Http\Controllers\Admin\UserController::class, 'teachers'])->name('user.teachers');
 
     Route::prefix('payment')->scopeBindings()->name('payment.')->group(function () {
-        Route::get('/index', [App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('index');
+        Route::get('/', [App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('index');
+        Route::get('/students/{id}/courses', [PaymentController::class, 'getStudentCourses'])->name('getStudentCourses');
     });
 
     Route::prefix('user')->scopeBindings()->name('user.')->group(function () {
@@ -98,6 +100,8 @@ Route::middleware(['auth', 'role:teacher', 'status'])->prefix('teacher')->name('
         Route::post('/list', [App\Http\Controllers\Teacher\StudentController::class, 'list'])->name('list');
         Route::post('/lessons/{id}', [App\Http\Controllers\Teacher\StudentController::class, 'showLessons'])->name('lessons');
         Route::post('/{id}', [App\Http\Controllers\Teacher\LessonController::class, 'store'])->name('lessonsStore');
+        
+
     });
     Route::get('/lessons', [App\Http\Controllers\Teacher\LessonController::class, 'show'])->name('lessons.index');
     Route::get('/lessons/events', [App\Http\Controllers\Teacher\LessonController::class, 'events'])->name('lessons.events');

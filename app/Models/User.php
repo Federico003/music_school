@@ -58,9 +58,9 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     public static function getTranslatedRole($role)
-{
-    return self::$roles[$role] ?? $role;
-}
+    {
+        return self::$roles[$role] ?? $role;
+    }
 
     /**
      * User statuses
@@ -165,10 +165,13 @@ class User extends Authenticatable implements MustVerifyEmail
     return $this->belongsToMany(Teacher::class, 'course_enrollments');
 }*/
 
-public function courses()
-{
-    return $this->belongsToMany(Course::class, 'teachers_courses', 'teacher_id', 'course_id');
-}
+    public function teacherCourses()
+    {
+        return $this->belongsToMany(Course::class, 'teachers_courses', 'teacher_id', 'course_id');
+    }
 
-    
+    public function studentCourses()
+    {
+        return $this->belongsToMany(Course::class, 'course_enrollments', 'user_id', 'course_id');
+    }
 }
